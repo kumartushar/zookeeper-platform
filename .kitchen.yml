@@ -1,16 +1,24 @@
 ---
 driver:
-  name: vagrant
+  name: docker
+  hostname: zookeeper-kitchen-01.kitchen
+  use_sudo: false
 
 provisioner:
   name: chef_zero
 
 platforms:
-  - name: ubuntu-12.04
-  - name: centos-6.5
+  - name: centos-7
+    driver_config:
+      require_chef_omnibus: false
+      provision_command:
+        - curl -L https://www.getchef.com/chef/install.sh | bash
+        - yum install -y hostname
 
 suites:
   - name: default
     run_list:
-      - recipe[zookeeper-cluster::default]
+      - role[zookeeper-kitchen]
     attributes:
+      zookeeper-cluster:
+        role: zookeeper-kitchen

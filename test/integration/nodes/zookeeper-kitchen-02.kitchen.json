@@ -1,0 +1,8 @@
+{
+  "id": "zookeeper-kitchen-02.kitchen",
+  "run_list": [ "role[zookeeper-kitchen]" ],
+  "automatic": {
+    "fqdn": "zookeeper-kitchen-02.kitchen",
+    "roles": ["zookeeper-kitchen"]
+  }
+}
