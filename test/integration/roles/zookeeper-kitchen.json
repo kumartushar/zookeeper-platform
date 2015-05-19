@@ -2,7 +2,16 @@
   "name": "zookeeper-kitchen",
   "json_class": "Chef::Role",
   "default_attributes": {
-
+    "zookeeper-cluster": {
+      "role": "zookeeper-kitchen",
+      "config": {
+        "clientPort": "2181",
+        "dataDir": "/var/lib/zookeeper",
+        "tickTime": "2000",
+        "initLimit": "5",
+        "syncLimit": "2"
+      }
+    }
   },
   "override_attributes": {
 

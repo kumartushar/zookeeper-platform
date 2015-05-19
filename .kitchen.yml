@@ -19,6 +19,3 @@ suites:
   - name: default
     run_list:
       - role[zookeeper-kitchen]
-    attributes:
-      zookeeper-cluster:
-        role: zookeeper-kitchen
