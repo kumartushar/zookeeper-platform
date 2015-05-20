@@ -1,4 +1,6 @@
 ---
+# <% load "#{File.dirname(__FILE__)}/test/kitchen_docker.rb" %>
+
 driver:
   name: docker
   hostname: zookeeper-kitchen-01.kitchen
@@ -10,6 +12,11 @@ provisioner:
 platforms:
   - name: centos-7
     driver_config:
+      instance_name: zookeeper-kitchen-01.kitchen
+      # The two following lines are needed by systemd to access cgroups
+      privileged: true
+      volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
+      run_command: /usr/sbin/init # Start systemd as root process
       require_chef_omnibus: false
       provision_command:
         - curl -L https://www.getchef.com/chef/install.sh | bash
