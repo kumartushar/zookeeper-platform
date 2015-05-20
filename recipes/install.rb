@@ -39,7 +39,6 @@ ark "zookeeper" do
   has_binaries  [ 'bin/zkCli.sh', 'bin/zkCleanup.sh', 'bin/zkServer.sh' ]
   checksum      node['zookeeper-cluster']['checksum']
   version       node['zookeeper-cluster']['version']
-  owner         node['zookeeper-cluster']['user']
 end
 
 puts "End of #{cookbook_name}::#{recipe_name}\n\n"

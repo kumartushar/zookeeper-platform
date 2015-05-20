@@ -13,16 +13,14 @@ default['zookeeper-cluster']['user']        = 'zookeeper'
 default['zookeeper-cluster']['prefix_root'] = '/opt'
 default['zookeeper-cluster']['prefix_home'] = '/opt'
 default['zookeeper-cluster']['prefix_bin']  = '/opt/bin'
-default['zookeeper-cluster']['local_dir']   = '/var/opt/zookeeper'
 default['zookeeper-cluster']['log_dir']     = '/var/opt/zookeeper/log'
+default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
 
 
 default['zookeeper-cluster']['role']        = 'zookeeper-cluster'
 
 default['zookeeper-cluster']['config']      = {
   'clientPort' => 2181,
-  'dataDir' => '/var/lib/zookeeper',
-  'tickTime' => 2000,
-  'initLimit' => 5,
-  'syncLimit' => 2
+  'dataDir' => "#{node['zookeeper-cluster']['data_dir']}",
+  'tickTime' => 2000
 }

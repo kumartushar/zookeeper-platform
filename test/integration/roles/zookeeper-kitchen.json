@@ -5,9 +5,6 @@
     "zookeeper-cluster": {
       "role": "zookeeper-kitchen",
       "config": {
-        "clientPort": "2181",
-        "dataDir": "/var/lib/zookeeper",
-        "tickTime": "2000",
         "initLimit": "5",
         "syncLimit": "2"
       }

@@ -28,13 +28,34 @@ config = {}.merge node_config
 hosts.each_with_index { |v,i| config["server.#{i+1}"]="#{v}:2888:3888" }
 puts "Configuration: #{config}"
 
-# General storm config
+# Create work directories
+[
+  node['zookeeper-cluster']['log_dir'],
+  node['zookeeper-cluster']['data_dir'],
+].each do |path|
+  directory path do
+    owner node['zookeeper-cluster']['user']
+    group node['zookeeper-cluster']['user']
+    mode '0755'
+    recursive true
+    action :create
+  end
+end
+
+# General zookeeper config
 config_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper/conf"
 
 template "#{config_path}/zoo.cfg" do
   variables     :config => config
   mode          "0644"
   source        "zoo.cfg.erb"
+end
+
+# Create myid file
+template "#{node['zookeeper-cluster']['data_dir']}/myid" do
+  variables     :my_id => my_id
+  mode          "0644"
+  source        "myid.erb"
 end
 
 puts "End of #{cookbook_name}::#{recipe_name}\n\n"
