@@ -4,8 +4,6 @@
 #
 # Copyright (c) 2015 S4M, All Rights Reserved.
 
-puts "\nStarting #{cookbook_name}::#{recipe_name}"
-
 # Fetch role name of the cluster
 cluster_role = node['zookeeper-cluster']['role']
 
@@ -57,5 +55,3 @@ template "#{node['zookeeper-cluster']['data_dir']}/myid" do
   mode          "0644"
   source        "myid.erb"
 end
-
-puts "End of #{cookbook_name}::#{recipe_name}\n\n"

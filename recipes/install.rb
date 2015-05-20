@@ -4,8 +4,6 @@
 #
 # Copyright (c) 2015 S4M, All Rights Reserved.
 
-puts "\nStarting #{cookbook_name}::#{recipe_name}"
-
 # tar may not be installed by default
 package 'tar'
 
@@ -40,5 +38,3 @@ ark "zookeeper" do
   checksum      node['zookeeper-cluster']['checksum']
   version       node['zookeeper-cluster']['version']
 end
-
-puts "End of #{cookbook_name}::#{recipe_name}\n\n"
