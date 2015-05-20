@@ -2,10 +2,10 @@
 # Default attributes
 #
 
-default['zookeeper-cluster'][:version]      = '3.4.6'
-default['zookeeper-cluster'][:checksum]     =
+default['zookeeper-cluster']['version']     = '3.4.6'
+default['zookeeper-cluster']['checksum']    =
   '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
-default['zookeeper-cluster'][:mirror]       =
+default['zookeeper-cluster']['mirror']      =
   'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'
   'http://www.poolsaboveground.com/apache/zookeeper'
 
@@ -18,9 +18,11 @@ default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
 
 
 default['zookeeper-cluster']['role']        = 'zookeeper-cluster'
+default['zookeeper-cluster']['nosearch']    = false
+default['zookeeper-cluster']['hosts']       = []
 
 default['zookeeper-cluster']['config']      = {
   'clientPort' => 2181,
-  'dataDir' => "#{node['zookeeper-cluster']['data_dir']}",
+  'dataDir' => node['zookeeper-cluster']['data_dir'],
   'tickTime' => 2000
 }

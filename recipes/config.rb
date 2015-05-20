@@ -7,11 +7,19 @@
 # Fetch role name of the cluster
 cluster_role = node['zookeeper-cluster']['role']
 
-# Fetch hosts based on a search
 fqdn = node['fqdn']
-puts "Searching in role #{cluster_role}"
-hosts = search(:node, "roles:#{cluster_role}")
-hosts = hosts.collect {|n| n['fqdn']}
+
+# Fetch server list
+if Chef::Config[:solo] || node['zookeeper-cluster']['nosearch']
+  # Fetch hosts with attributes
+  hosts = [] + node['zookeeper-cluster']['hosts']
+else
+  # Fetch hosts based on a search
+  puts "Searching in role #{cluster_role}"
+  hosts = search(:node, "roles:#{cluster_role}")
+  hosts = hosts.collect {|n| n['fqdn']}
+end
+
 hosts << fqdn unless hosts.include? fqdn
 hosts = hosts.sort
 puts "Hosts found: #{hosts}"
