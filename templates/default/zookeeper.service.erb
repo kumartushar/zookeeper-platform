@@ -1,0 +1,21 @@
+[Unit]
+Description=Zookeeper distributed coordination server
+After=network.target
+
+[Service]
+User=<%= @node['zookeeper-cluster']['user'] %>
+Group=<%= @node['zookeeper-cluster']['user'] %>
+SyslogIdentifier=zookeeper
+Restart=on-failure
+ExecStart=/usr/bin/java \
+  -Dzookeeper.log.dir=<%= @node['zookeeper-cluster']['log_dir'] %> \
+  -Dzookeeper.root.logger=INFO,ROLLINGFILE \
+  -cp <%= @node['zookeeper-cluster']['prefix_home'] %>/zookeeper/* \
+  -Dlog4j.configuration=file:<%= @log4j_file %> \
+  -Dcom.sun.management.jmxremote \
+  -Dcom.sun.management.jmxremote.local.only=false \
+  org.apache.zookeeper.server.quorum.QuorumPeerMain \
+  <%= @config_file %>
+
+[Install]
+WantedBy=multi-user.target

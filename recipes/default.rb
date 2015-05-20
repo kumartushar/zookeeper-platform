@@ -7,3 +7,4 @@
 include_recipe "#{cookbook_name}::install"
 include_recipe "#{cookbook_name}::create-user"
 include_recipe "#{cookbook_name}::config"
+include_recipe "#{cookbook_name}::systemd-service"
