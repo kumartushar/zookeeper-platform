@@ -38,3 +38,9 @@ ark "zookeeper" do
   checksum      node['zookeeper-cluster']['checksum']
   version       node['zookeeper-cluster']['version']
 end
+
+# Symbolic link for zookeeper jar to simplify service file
+install_dir = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper"
+link "#{install_dir}/zookeeper.jar" do
+  to "#{install_dir}/zookeeper-#{version}.jar"
+end

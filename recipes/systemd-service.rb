@@ -6,8 +6,10 @@
 
 # Install and launch zookeeper service through systemd
 config_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper/conf"
+install_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper"
 
-service_config = {
+  service_config = {
+  :classpath => "#{install_path}/zookeeper.jar:#{install_path}/lib/*",
   :config_file => "#{config_path}/zoo.cfg",
   :log4j_file => "#{config_path}/log4j.properties"
 }

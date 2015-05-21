@@ -10,7 +10,7 @@ Restart=on-failure
 ExecStart=/usr/bin/java \
   -Dzookeeper.log.dir=<%= @node['zookeeper-cluster']['log_dir'] %> \
   -Dzookeeper.root.logger=INFO,ROLLINGFILE \
-  -cp <%= @node['zookeeper-cluster']['prefix_home'] %>/zookeeper/* \
+  -cp <%= @classpath %> \
   -Dlog4j.configuration=file:<%= @log4j_file %> \
   -Dcom.sun.management.jmxremote \
   -Dcom.sun.management.jmxremote.local.only=false \
