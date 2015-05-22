@@ -3,7 +3,6 @@
 
 driver:
   name: docker
-  hostname: zookeeper-kitchen-01.kitchen
   use_sudo: false
 
 provisioner:
@@ -12,7 +11,6 @@ provisioner:
 platforms:
   - name: centos-7
     driver_config:
-      instance_name: zookeeper-kitchen-01.kitchen
       # The two following lines are needed by systemd to access cgroups
       privileged: true
       volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -23,6 +21,21 @@ platforms:
         - yum install -y hostname
 
 suites:
-  - name: default
+  - name: zookeeper-kitchen-01
+    driver:
+      hostname: zookeeper-kitchen-01.kitchen
+      instance_name: zookeeper-kitchen-01
+    run_list:
+      - role[zookeeper-kitchen]
+  - name: zookeeper-kitchen-02
+    driver:
+      hostname: zookeeper-kitchen-02.kitchen
+      instance_name: zookeeper-kitchen-02
+    run_list:
+      - role[zookeeper-kitchen]
+  - name: zookeeper-kitchen-03
+    driver:
+      hostname: zookeeper-kitchen-03.kitchen
+      instance_name: zookeeper-kitchen-03
     run_list:
       - role[zookeeper-kitchen]
