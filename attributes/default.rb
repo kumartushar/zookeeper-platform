@@ -18,8 +18,8 @@ default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
 
 
 default['zookeeper-cluster']['role']        = 'zookeeper-cluster'
-default['zookeeper-cluster']['nosearch']    = false
-default['zookeeper-cluster']['hosts']       = []
+default['zookeeper-cluster']['hosts']       = [] # Use search when empty
+default['zookeeper-cluster']['size']        = 3 # Ignored hosts is non empty
 
 default['zookeeper-cluster']['config']      = {
   'clientPort' => 2181,

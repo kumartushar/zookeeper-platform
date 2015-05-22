@@ -8,24 +8,44 @@
 cluster_role = node['zookeeper-cluster']['role']
 
 fqdn = node['fqdn']
+puts "I am node #{fqdn}"
 
 # Fetch server list
-if Chef::Config[:solo] || node['zookeeper-cluster']['nosearch']
+if Chef::Config[:solo] || node['zookeeper-cluster']['hosts'] != []
   # Fetch hosts with attributes
   hosts = [] + node['zookeeper-cluster']['hosts']
+  # Ignore zookeeper-cluster.size attribute
+  cluster_size = hosts.size
 else
   # Fetch hosts based on a search
   puts "Searching in role #{cluster_role}"
   hosts = search(:node, "roles:#{cluster_role}")
-  hosts = hosts.collect {|n| n['fqdn']}
+  hosts = hosts.collect {|n| n['fqdn']}.uniq
+  hosts << fqdn unless hosts.include? fqdn
+  # Get wanted size
+  cluster_size = node['zookeeper-cluster']['size']
 end
 
-hosts << fqdn unless hosts.include? fqdn
 hosts = hosts.sort
 puts "Hosts found: #{hosts}"
 
+# Verify size
+puts "I want #{cluster_size} servers and I've got #{hosts.size}"
+if hosts.size != cluster_size
+  if hosts.size < cluster_size
+    puts "so I'm returning to wait for other nodes to declare themselves"
+  else
+    puts "Too many servers, is there a configuration problem?"
+  end
+  return
+else
+  puts "so it's fine, let's continue!"
+end
+
 # My ID
-my_id = (hosts.index fqdn)+1
+index = hosts.index fqdn
+raise "Cannot find myself in node list, wrong configuration?" if index == nil
+my_id = index+1
 puts "My ID: #{my_id}"
 
 # Generate config
