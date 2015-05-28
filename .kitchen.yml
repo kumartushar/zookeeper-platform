@@ -1,4 +1,5 @@
 ---
+# <% load "#{File.dirname(__FILE__)}/test/kitchen_command.rb" %>
 # <% load "#{File.dirname(__FILE__)}/test/kitchen_docker.rb" %>
 
 driver:
@@ -12,30 +13,66 @@ platforms:
   - name: centos-7
     driver_config:
       # The two following lines are needed by systemd to access cgroups
-      privileged: true
       volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
+      privileged: true
       run_command: /usr/sbin/init # Start systemd as root process
       require_chef_omnibus: false
       provision_command:
-        - curl -L https://www.getchef.com/chef/install.sh | bash
-        - yum install -y hostname
+        - >
+          curl -L https://www.getchef.com/chef/install.sh | bash &&
+          yum install -y hostname
+        - yum install -y net-tools patch make automake autoconf gcc
 
 suites:
-  - name: zookeeper-kitchen-01
+  # Use dnsdock to provide a container name resolution
+  - name: dnsdock
+    includes: centos-7
+    driver:
+      hostname: dnsdock-zookeeper
+      instance_name: dnsdock-zookeeper
+      volume:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        - /var/run/docker.sock:/opt/run/docker.sock:ro
+      provision_command:
+        - >
+          curl -L https://www.getchef.com/chef/install.sh | bash &&
+          yum install -y hostname
+        - >
+          yum install -y go tar git &&
+          mkdir -p /opt/go &&
+          export GOPATH=/opt/go && export PATH=$PATH:/opt/go/bin &&
+          go get -v github.com/tools/godep &&
+          mkdir -p /opt/go/src/github.com/tonistiigi &&
+          cd /opt/go/src/github.com/tonistiigi &&
+          curl https://codeload.github.com/tonistiigi/dnsdock/tar.gz/v1.5.0 |
+          tar xz && cd dnsdock-1.5.0 &&
+          godep restore && go build &&
+          mv dnsdock-1.5.0 /opt/go/bin/dnsdock &&
+          echo -e '[Unit]\nDescription=dnsdock\n
+          [Service]\nExecStart=/opt/go/bin/dnsdock
+          -docker unix:///opt/run/docker.sock -domain=kitchen\n
+          [Install]\nWantedBy=multi-user.target'
+          > /usr/lib/systemd/system/dnsdock.service &&
+          systemctl enable dnsdock
+
+  - name: zookeeper-01
     driver:
       hostname: zookeeper-kitchen-01.kitchen
       instance_name: zookeeper-kitchen-01
+      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
     run_list:
       - role[zookeeper-kitchen]
-  - name: zookeeper-kitchen-02
+  - name: zookeeper-02
     driver:
       hostname: zookeeper-kitchen-02.kitchen
       instance_name: zookeeper-kitchen-02
+      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
     run_list:
       - role[zookeeper-kitchen]
-  - name: zookeeper-kitchen-03
+  - name: zookeeper-03
     driver:
       hostname: zookeeper-kitchen-03.kitchen
       instance_name: zookeeper-kitchen-03
+      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
     run_list:
       - role[zookeeper-kitchen]
