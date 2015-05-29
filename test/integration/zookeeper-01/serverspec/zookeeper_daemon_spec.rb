@@ -33,6 +33,26 @@ describe 'Zookeeper Daemon' do
   end
 end
 
+describe file('/opt/zookeeper/conf/zoo.cfg') do
+  its(:content) { should eq <<-eos.gsub(/^ {4}/, '') }
+    # Produced by Chef -- changes will be overwritten
+
+    clientPort=2181
+    dataDir=/var/opt/zookeeper/lib
+    tickTime=2000
+    initLimit=5
+    syncLimit=2
+    maxClientCnxns=100
+    server.1=zookeeper-kitchen-01.kitchen:2888:3888
+    server.2=zookeeper-kitchen-02.kitchen:2888:3888
+    server.3=zookeeper-kitchen-03.kitchen:2888:3888
+  eos
+end
+
+describe file('/var/opt/zookeeper/lib/myid') do
+  its(:content) { should eq "1\n" }
+end
+
 describe 'Zookeeper Cluster' do
   it 'should create /kitchen containing "Data"' do
     # Create a node locally
