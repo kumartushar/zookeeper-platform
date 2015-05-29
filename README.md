@@ -17,8 +17,13 @@ Usage
 ### Easy Setup
 
 Create a role `zookeeper-cluster` having `recipe['zookeeper-cluster']` in its
-runlist. Add this role in the runlists of the nodes you want to use for your
-cluster. By default, you need exactly 3 nodes.
+runlist and setting `node['zookeeper-cluster']['role']` to itself. Add this
+role in the runlists of the nodes you want to use for your cluster. By default,
+you need exactly 3 nodes.
+
+By default, this cookbook includes the *java* cookbook in **systemd-service**
+recipe, just before launching the service. You can deactivate this
+behavior by setting `node['zookeeper-cluster']['install_java']` to false.
 
 ### Search
 
@@ -111,6 +116,8 @@ Attributes
   Default is '/var/opt/zookeeper/log'.
 - `node['zookeeper-cluster']['data_dir']`: Data directory.
   Default is '/var/opt/zookeeper/lib'.
+- `node['zookeeper-cluster']['install_java']`: Include *java* cookbook.
+  Default is true.
 
 ### Cluster Configuration
 

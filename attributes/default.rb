@@ -35,6 +35,7 @@ default['zookeeper-cluster']['prefix_home'] = '/opt'
 default['zookeeper-cluster']['prefix_bin']  = '/opt/bin'
 default['zookeeper-cluster']['log_dir']     = '/var/opt/zookeeper/log'
 default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
+default['zookeeper-cluster']['install_java']= true
 
 # Cluster configuration
 default['zookeeper-cluster']['role']        = 'zookeeper-cluster'

@@ -36,7 +36,7 @@ template "/usr/lib/systemd/system/zookeeper.service" do
 end
 
 # Java is needed by zookeeper
-include_recipe "java"
+include_recipe "java" if node['zookeeper-cluster']['install_java']
 
 # Enable/Start service
 service "zookeeper" do
