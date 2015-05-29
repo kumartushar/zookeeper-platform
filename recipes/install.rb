@@ -34,7 +34,7 @@ ark "zookeeper" do
   prefix_root   node['zookeeper-cluster']['prefix_root']
   prefix_home   node['zookeeper-cluster']['prefix_home']
   prefix_bin    node['zookeeper-cluster']['prefix_bin']
-  has_binaries  [ 'bin/zkCli.sh', 'bin/zkCleanup.sh', 'bin/zkServer.sh' ]
+  has_binaries  [] # zookeeper script does not work when linked
   checksum      node['zookeeper-cluster']['checksum']
   version       node['zookeeper-cluster']['version']
 end

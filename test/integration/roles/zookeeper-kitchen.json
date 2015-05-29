@@ -5,8 +5,7 @@
     "zookeeper-cluster": {
       "role": "zookeeper-kitchen",
       "config": {
-        "initLimit": "5",
-        "syncLimit": "2"
+        "maxClientCnxns": "100"
       }
     }
   },
