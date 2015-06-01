@@ -118,6 +118,8 @@ Attributes
   Default is '/var/opt/zookeeper/lib'.
 - `node['zookeeper-cluster']['install_java']`: Include *java* cookbook.
   Default is true.
+- `node['zookeeper-cluster']['auto_restart']`: Restart Zookeeper service
+  if a configuration file change. Default is true.
 
 ### Cluster Configuration
 

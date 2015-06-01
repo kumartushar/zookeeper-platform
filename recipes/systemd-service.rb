@@ -28,19 +28,38 @@ service_config = {
   :log4j_file => "#{config_path}/log4j.properties"
 }
 
-# Install service file
+# Install service file, reload systemd daemon if necessary
+execute "systemd-reload" do
+  command "systemctl daemon-reload"
+  action :nothing
+end
+
 template "/usr/lib/systemd/system/zookeeper.service" do
   variables     service_config
   mode          "0644"
   source        "zookeeper.service.erb"
+  notifies      :run, 'execute[systemd-reload]', :immediately
 end
 
 # Java is needed by zookeeper
 include_recipe "java" if node['zookeeper-cluster']['install_java']
+
+# Configuration files to be subscribed
+if node['zookeeper-cluster']['auto_restart']
+  config_files = [
+    "#{config_path}/zoo.cfg}",
+    "#{config_path}/log4j.properties",
+    "#{node['zookeeper-cluster']['data_dir']}/myid"
+  ].map do |path|
+    "template[#{path}]"
+  end
+else config_files = []
+end
 
 # Enable/Start service
 service "zookeeper" do
   provider Chef::Provider::Service::Systemd
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
+  subscribes :restart, config_files
 end
