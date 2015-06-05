@@ -71,6 +71,7 @@ Requirements
 
 From <https://supermarket.chef.io>:
 - java
+- cluster-search
 - ark
 
 ### Gems

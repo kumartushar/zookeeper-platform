@@ -10,5 +10,6 @@ version '1.0.0'
 
 supports 'centos',  '>= 7'
 
-depends 'java'
 depends 'ark'
+depends 'cluster-search'
+depends 'java'

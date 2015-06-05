@@ -33,8 +33,9 @@ describe 'Zookeeper Daemon' do
   end
 end
 
-describe file('/opt/zookeeper/conf/zoo.cfg') do
-  its(:content) { should eq <<-eos.gsub(/^ {4}/, '') }
+describe 'Zookeeper Configuration' do
+  describe file('/opt/zookeeper/conf/zoo.cfg') do
+    its(:content) { should eq <<-eos.gsub(/^ {4}/, '') }
     # Produced by Chef -- changes will be overwritten
 
     clientPort=2181
@@ -46,11 +47,12 @@ describe file('/opt/zookeeper/conf/zoo.cfg') do
     server.1=zookeeper-kitchen-01.kitchen:2888:3888
     server.2=zookeeper-kitchen-02.kitchen:2888:3888
     server.3=zookeeper-kitchen-03.kitchen:2888:3888
-  eos
-end
+    eos
+  end
 
-describe file('/var/opt/zookeeper/lib/myid') do
-  its(:content) { should eq "1\n" }
+  describe file('/var/opt/zookeeper/lib/myid') do
+    its(:content) { should eq "1\n" }
+  end
 end
 
 describe 'Zookeeper Cluster' do
