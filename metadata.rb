@@ -12,4 +12,3 @@ supports 'centos',  '>= 7'
 
 depends 'ark'
 depends 'cluster-search'
-depends 'java'

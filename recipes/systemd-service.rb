@@ -41,8 +41,9 @@ template "/usr/lib/systemd/system/zookeeper.service" do
   notifies      :run, 'execute[systemd-reload]', :immediately
 end
 
-# Java is needed by zookeeper
-include_recipe "java" if node['zookeeper-cluster']['install_java']
+# Java is needed by Kafka, can install it with package
+java_package = node['zookeeper-cluster']['java'][node[:platform]]
+package java_package if !java_package.to_s.empty?
 
 # Configuration files to be subscribed
 if node['zookeeper-cluster']['auto_restart']

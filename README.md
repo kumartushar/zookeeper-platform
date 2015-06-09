@@ -21,9 +21,11 @@ runlist and setting `node['zookeeper-cluster']['role']` to itself. Add this
 role in the runlists of the nodes you want to use for your cluster. By default,
 you need exactly 3 nodes.
 
-By default, this cookbook includes the *java* cookbook in **systemd-service**
-recipe, just before launching the service. You can deactivate this
-behavior by setting `node['zookeeper-cluster']['install_java']` to false.
+By default, this cookbook installs *openjdk* from the official repositories
+*(openjdk 8 on centos 7)* in **systemd-service** recipe, just before
+launching the service. You can deactivate this behavior by setting
+`node['zookeeper-cluster']['java']` to `""`, or choose your package by setting
+the packahe name in `node['zookeeper-cluster']['java'][node[:platform]]`.
 
 ### Search
 
@@ -70,7 +72,6 @@ Requirements
 ### Cookbooks
 
 From <https://supermarket.chef.io>:
-- java
 - cluster-search
 - ark
 
