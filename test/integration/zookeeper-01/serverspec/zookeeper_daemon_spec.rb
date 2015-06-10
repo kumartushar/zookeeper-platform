@@ -24,7 +24,7 @@ describe 'Zookeeper Daemon' do
     expect(service("zookeeper")).to be_running
   end
 
-  it 'is launch at boot' do
+  it 'is launched at boot' do
     expect(service('zookeeper')).to be_enabled
   end
 
