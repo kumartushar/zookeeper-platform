@@ -25,7 +25,7 @@ By default, this cookbook installs *openjdk* from the official repositories
 *(openjdk 8 on centos 7)* in **systemd-service** recipe, just before
 launching the service. You can deactivate this behavior by setting
 `node['zookeeper-cluster']['java']` to `""`, or choose your package by setting
-the packahe name in `node['zookeeper-cluster']['java'][node[:platform]]`.
+the package name in `node['zookeeper-cluster']['java'][node[:platform]]`.
 
 ### Search
 
@@ -56,7 +56,7 @@ You can also use this cookbook to install a zookeeper cluster locally. By
 running `kitchen converge`, you will have a 3-nodes cluster available on your
 workstation, each in its own docker host. You can then access it with:
 
-    zkCli.sh -server (docker inspect \
+    zkCli.sh -server $(docker inspect \
       --format '{{.NetworkSettings.IPAddress}}' zookeeper-kitchen-01)
 
 Changes
@@ -71,17 +71,11 @@ Requirements
 
 ### Cookbooks
 
-From <https://supermarket.chef.io>:
-- cluster-search
-- ark
+Declared in [metadata.rb](metadata.rb).
 
 ### Gems
 
-From <https://rubygems.org>:
-
-- berkshelf
-- test-kitchen
-- kitchen-docker
+Declared in [Gemfile](Gemfile).
 
 ### Platforms
 
@@ -171,8 +165,8 @@ directories: for data and logs.
 
 ### systemd-service
 
-Install zookeeper service for systemd, enable and start it.
-Run *java* cookbook as it is needed to launch zookeeper.
+Install zookeeper service for systemd, enable and start it. Install *java*
+package by default.
 
 Resources/Providers
 -------------------
@@ -183,8 +177,8 @@ Contributing
 ------------
 
 You are more than welcome to submit issues and merge requests to this project.
-Note however that this cookbook will never support another supervisor than
-*systemd*.
+Note however that this cookbook will probably not support another supervisor
+than *systemd*.
 
 ### Commits
 
