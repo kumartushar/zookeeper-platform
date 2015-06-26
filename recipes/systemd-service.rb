@@ -42,7 +42,7 @@ template "/usr/lib/systemd/system/zookeeper.service" do
 end
 
 # Java is needed by Kafka, can install it with package
-java_package = node['zookeeper-cluster']['java'][node[:platform]]
+java_package = node['zookeeper-cluster']['java'][node['platform']]
 package java_package if !java_package.to_s.empty?
 
 # Configuration files to be subscribed
