@@ -23,8 +23,7 @@ cluster = cluster_search(node['zookeeper-cluster'])
 return if cluster == nil
 
 # Generate config
-node_config = node['zookeeper-cluster']['config']
-config = {}.merge node_config
+config = node['zookeeper-cluster']['config'].dup
 cluster['hosts'].each_with_index {
   |v,i| config["server.#{i+1}"]="#{v}:2888:3888"
 }
