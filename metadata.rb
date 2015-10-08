@@ -8,7 +8,7 @@ source_url 'https://gitlab.com/s4m-chef-repositories/zookeeper-cluster'
 issues_url 'https://gitlab.com/s4m-chef-repositories/zookeeper-cluster/issues'
 version '1.0.0'
 
-supports 'centos',  '>= 7'
+supports 'centos',  '>= 7.1'
 
 depends 'ark'
 depends 'cluster-search'
