@@ -22,21 +22,32 @@ default['zookeeper-platform']['mirror']      =
   'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'
 
 # Zookeeper installation
+# User and group of zookeeper process
 default['zookeeper-platform']['user']        = 'zookeeper'
+# Where to put installation dir
 default['zookeeper-platform']['prefix_root'] = '/opt'
+# Where to link installation dir
 default['zookeeper-platform']['prefix_home'] = '/opt'
+# Where to link binaries
 default['zookeeper-platform']['prefix_bin']  = '/opt/bin'
+# Log directory
 default['zookeeper-platform']['log_dir']     = '/var/opt/zookeeper/log'
+# Data directory
 default['zookeeper-platform']['data_dir']    = '/var/opt/zookeeper/lib'
+# Java package to install by platform
 default['zookeeper-platform']['java']        = {
   'centos' => 'java-1.8.0-openjdk-headless'
 }
+# Restart Zookeeper service if a configuration file change
 default['zookeeper-platform']['auto_restart']= true
 
 # Cluster configuration
+# Role used by the search to find other nodes of the cluster
 default['zookeeper-platform']['role']        = 'zookeeper-platform'
-default['zookeeper-platform']['hosts']       = [] # Use search when empty
-default['zookeeper-platform']['size']        = 3 # Ignored hosts is non empty
+# Hosts of the cluster, deactivate search if not empty
+default['zookeeper-platform']['hosts']       = []
+# Expected size of the cluster. Ignored if hosts is not empty
+default['zookeeper-platform']['size']        = 3
 
 # Zookeeper configuration
 default['zookeeper-platform']['config']      = {

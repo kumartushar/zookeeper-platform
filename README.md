@@ -1,5 +1,5 @@
-Zookeeper Cluster
-=================
+Zookeeper Platform
+==================
 
 Description
 -----------
@@ -88,58 +88,10 @@ allow systemd to work easily, so it could not be tested.
 Attributes
 ----------
 
-### Zookeeper Package
-
-- `node['zookeeper-platform']['version']`: Version of Zookeeper.
-  Default is '3.4.6'.
-- `node['zookeeper-platform']['checksum']`: Checksum of Zookeeper package.
-  Default
-  is '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'.
-- `node['zookeeper-platform']['mirror']`: Apache mirror.
-  Default is 'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'.
-
-### Install Configuration
-
-- `node['zookeeper-platform']['user']`: User and group of zookeeper process.
-  Default is 'zookeeper'.
-- `node['zookeeper-platform']['prefix_root']`: Where to put installation dir.
-  Default is '/opt'.
-- `node['zookeeper-platform']['prefix_home']`: Where to link installation dir.
-  Default is '/opt'.
-- `node['zookeeper-platform']['prefix_bin']`: Where to link binaries.
-  Default is '/opt/bin'.
-- `node['zookeeper-platform']['log_dir']`: Log directory.
-  Default is '/var/opt/zookeeper/log'.
-- `node['zookeeper-platform']['data_dir']`: Data directory.
-  Default is '/var/opt/zookeeper/lib'.
-- `node['zookeeper-platform']['install_java']`: Include *java* cookbook.
-  Default is true.
-- `node['zookeeper-platform']['auto_restart']`: Restart Zookeeper service
-  if a configuration file change. Default is true.
-
-### Cluster Configuration
-
-- `node['zookeeper-platform']['role']`: Role used by the search to find other
-  nodes of the cluster. Default is 'zookeeper-platform'.
-- `node['zookeeper-platform']['hosts']`: Hosts of the cluster, deactivate search
-  if not empty. Default is [].
-- `node['zookeeper-platform']['size']`: Expected size of the cluster. Ignored if
-  hosts is not empty. Default is 3.
-
-### Zookeeper Configuration
-
-- `node['zookeeper-platform']['config']`: Base zookeeper configuration.
-  Default is:
-
-```text
-  {
-    'clientPort' => 2181,
-    'dataDir' => node['zookeeper-platform']['data_dir'],
-    'tickTime' => 2000,
-    'initLimit' => 5,
-    'syncLimit' => 2
-  }
-```
+Configuration is done by overriding default attributes. All configuration keys
+have a default defined in [attributes/default.rb](attributes/default.rb).
+Please read it to have a comprehensive view of what and how you can configure
+this cookbook behavior.
 
 Recipes
 -------
