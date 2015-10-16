@@ -1,7 +1,4 @@
 #
-# Author:: Samuel Bernard (<samuel.bernard@s4m.io>)
-# Cookbook Name:: zookeeper-cluster
-#
 # Copyright (c) 2015 Sam4Mobile
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,5 +18,5 @@ require 'serverspec'
 
 set :backend, :exec
 
-# # Used by testing
+# Used in testing
 require 'zookeeper'

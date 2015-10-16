@@ -1,7 +1,4 @@
 #
-# Author:: Samuel Bernard (<samuel.bernard@s4m.io>)
-# Cookbook Name:: zookeeper-cluster
-#
 # Copyright (c) 2015 Sam4Mobile
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +14,11 @@
 # limitations under the License.
 #
 ---
-# <% load "#{File.dirname(__FILE__)}/test/kitchen_command.rb" %>
-# <% load "#{File.dirname(__FILE__)}/test/kitchen_docker.rb" %>
+# Customize Kitchen with some monkey patching:
+# - Suites scheduler
+#   <% load "#{File.dirname(__FILE__)}/test/kitchen_command.rb" %>
+# - improve login and destroy with docker driver (depend on systemd)
+#   <% load "#{File.dirname(__FILE__)}/test/kitchen_docker.rb" %>
 
 driver:
   name: docker

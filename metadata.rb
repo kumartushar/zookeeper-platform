@@ -1,6 +1,6 @@
 name 'zookeeper-cluster'
 maintainer 'Sam4Mobile'
-maintainer_email 'samuel.bernard@s4m.io'
+maintainer_email 'dps.team@s4m.io'
 license 'Apache 2.0'
 description 'Installs/Configures a Zookeeper cluster using systemd'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
