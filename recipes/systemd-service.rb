@@ -15,8 +15,8 @@
 #
 
 # Install and launch zookeeper service through systemd
-config_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper/conf"
-install_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper"
+config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
+install_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper"
 
 service_config = {
   :classpath => "#{install_path}/zookeeper.jar:#{install_path}/lib/*",
@@ -38,15 +38,15 @@ template "/usr/lib/systemd/system/zookeeper.service" do
 end
 
 # Java is needed by Kafka, can install it with package
-java_package = node['zookeeper-cluster']['java'][node['platform']]
+java_package = node['zookeeper-platform']['java'][node['platform']]
 package java_package if !java_package.to_s.empty?
 
 # Configuration files to be subscribed
-if node['zookeeper-cluster']['auto_restart']
+if node['zookeeper-platform']['auto_restart']
   config_files = [
     "#{config_path}/zoo.cfg}",
     "#{config_path}/log4j.properties",
-    "#{node['zookeeper-cluster']['data_dir']}/myid"
+    "#{node['zookeeper-platform']['data_dir']}/myid"
   ].map do |path|
     "template[#{path}]"
   end

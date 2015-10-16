@@ -16,30 +16,30 @@ Usage
 
 ### Easy Setup
 
-Create a role `zookeeper-cluster` having `recipe['zookeeper-cluster']` in its
-runlist and setting `node['zookeeper-cluster']['role']` to itself. Add this
+Create a role `zookeeper-platform` having `recipe['zookeeper-platform']` in its
+runlist and setting `node['zookeeper-platform']['role']` to itself. Add this
 role in the runlists of the nodes you want to use for your cluster. By default,
 you need exactly 3 nodes.
 
 By default, this cookbook installs *openjdk* from the official repositories
 *(openjdk 8 on centos 7)* in **systemd-service** recipe, just before
 launching the service. You can deactivate this behavior by setting
-`node['zookeeper-cluster']['java']` to `""`, or choose your package by setting
-the package name in `node['zookeeper-cluster']['java'][node[:platform]]`.
+`node['zookeeper-platform']['java']` to `""`, or choose your package by setting
+the package name in `node['zookeeper-platform']['java'][node[:platform]]`.
 
 ### Search
 
 By default, the *config* recipe use a search to find the members of a cluster.
 The search is parametrized by a role name, defined in attribute
-`node['zookeeper-cluster']['role']` which default to *zookeeper-cluster*.
+`node['zookeeper-platform']['role']` which default to *zookeeper-platform*.
 Node having this role in their expanded runlist will be considered in the same
 zookeeper cluster. For safety reason, if search is used, you need to define
-`node['zookeeper-cluster']['size']` (3 by default). The cookbook will return
+`node['zookeeper-platform']['size']` (3 by default). The cookbook will return
 (with success) until the search return *size* nodes. This ensures the
 stability of the configuration during the initial startup of a cluster.
 
 If you do not want to use search, it is possible to define
-`node['zookeeper-cluster']['hosts']` with an array containing the hostnames of
+`node['zookeeper-platform']['hosts']` with an array containing the hostnames of
 the nodes of a zookeeper cluster. In this case, *size* attribute is ignored
 and search deactivated.
 
@@ -90,51 +90,51 @@ Attributes
 
 ### Zookeeper Package
 
-- `node['zookeeper-cluster']['version']`: Version of Zookeeper.
+- `node['zookeeper-platform']['version']`: Version of Zookeeper.
   Default is '3.4.6'.
-- `node['zookeeper-cluster']['checksum']`: Checksum of Zookeeper package.
+- `node['zookeeper-platform']['checksum']`: Checksum of Zookeeper package.
   Default
   is '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'.
-- `node['zookeeper-cluster']['mirror']`: Apache mirror.
+- `node['zookeeper-platform']['mirror']`: Apache mirror.
   Default is 'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'.
 
 ### Install Configuration
 
-- `node['zookeeper-cluster']['user']`: User and group of zookeeper process.
+- `node['zookeeper-platform']['user']`: User and group of zookeeper process.
   Default is 'zookeeper'.
-- `node['zookeeper-cluster']['prefix_root']`: Where to put installation dir.
+- `node['zookeeper-platform']['prefix_root']`: Where to put installation dir.
   Default is '/opt'.
-- `node['zookeeper-cluster']['prefix_home']`: Where to link installation dir.
+- `node['zookeeper-platform']['prefix_home']`: Where to link installation dir.
   Default is '/opt'.
-- `node['zookeeper-cluster']['prefix_bin']`: Where to link binaries.
+- `node['zookeeper-platform']['prefix_bin']`: Where to link binaries.
   Default is '/opt/bin'.
-- `node['zookeeper-cluster']['log_dir']`: Log directory.
+- `node['zookeeper-platform']['log_dir']`: Log directory.
   Default is '/var/opt/zookeeper/log'.
-- `node['zookeeper-cluster']['data_dir']`: Data directory.
+- `node['zookeeper-platform']['data_dir']`: Data directory.
   Default is '/var/opt/zookeeper/lib'.
-- `node['zookeeper-cluster']['install_java']`: Include *java* cookbook.
+- `node['zookeeper-platform']['install_java']`: Include *java* cookbook.
   Default is true.
-- `node['zookeeper-cluster']['auto_restart']`: Restart Zookeeper service
+- `node['zookeeper-platform']['auto_restart']`: Restart Zookeeper service
   if a configuration file change. Default is true.
 
 ### Cluster Configuration
 
-- `node['zookeeper-cluster']['role']`: Role used by the search to find other
-  nodes of the cluster. Default is 'zookeeper-cluster'.
-- `node['zookeeper-cluster']['hosts']`: Hosts of the cluster, deactivate search
+- `node['zookeeper-platform']['role']`: Role used by the search to find other
+  nodes of the cluster. Default is 'zookeeper-platform'.
+- `node['zookeeper-platform']['hosts']`: Hosts of the cluster, deactivate search
   if not empty. Default is [].
-- `node['zookeeper-cluster']['size']`: Expected size of the cluster. Ignored if
+- `node['zookeeper-platform']['size']`: Expected size of the cluster. Ignored if
   hosts is not empty. Default is 3.
 
 ### Zookeeper Configuration
 
-- `node['zookeeper-cluster']['config']`: Base zookeeper configuration.
+- `node['zookeeper-platform']['config']`: Base zookeeper configuration.
   Default is:
 
 ```text
   {
     'clientPort' => 2181,
-    'dataDir' => node['zookeeper-cluster']['data_dir'],
+    'dataDir' => node['zookeeper-platform']['data_dir'],
     'tickTime' => 2000,
     'initLimit' => 5,
     'syncLimit' => 2

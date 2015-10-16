@@ -3,12 +3,12 @@ Description=Zookeeper distributed coordination server
 After=network.target
 
 [Service]
-User=<%= @node['zookeeper-cluster']['user'] %>
-Group=<%= @node['zookeeper-cluster']['user'] %>
+User=<%= @node['zookeeper-platform']['user'] %>
+Group=<%= @node['zookeeper-platform']['user'] %>
 SyslogIdentifier=zookeeper
 Restart=on-failure
 ExecStart=/usr/bin/java \
-  -Dzookeeper.log.dir=<%= @node['zookeeper-cluster']['log_dir'] %> \
+  -Dzookeeper.log.dir=<%= @node['zookeeper-platform']['log_dir'] %> \
   -Dzookeeper.root.logger=INFO,ROLLINGFILE \
   -cp <%= @classpath %> \
   -Dlog4j.configuration=file:<%= @log4j_file %> \

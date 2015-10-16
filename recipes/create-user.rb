@@ -15,11 +15,11 @@
 #
 
 # Create zookeeper-service group & user
-group node['zookeeper-cluster']['user'] do
+group node['zookeeper-platform']['user'] do
 end
 
-user node['zookeeper-cluster']['user'] do
-  gid node['zookeeper-cluster']['user']
+user node['zookeeper-platform']['user'] do
+  gid node['zookeeper-platform']['user']
   shell '/bin/nologin'
   system true
   action :create

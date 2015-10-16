@@ -18,15 +18,15 @@
 package 'tar'
 
 # Shorten variables
-version = node['zookeeper-cluster']['version']
-zookeeper_url = "#{node['zookeeper-cluster']['mirror']}/zookeeper-#{version}"
+version = node['zookeeper-platform']['version']
+zookeeper_url = "#{node['zookeeper-platform']['mirror']}/zookeeper-#{version}"
 zookeeper_artifact = "zookeeper-#{version}.tar.gz"
 
 # Create prefix directories
 [
-  node['zookeeper-cluster']['prefix_root'],
-  node['zookeeper-cluster']['prefix_home'],
-  node['zookeeper-cluster']['prefix_bin']
+  node['zookeeper-platform']['prefix_root'],
+  node['zookeeper-platform']['prefix_home'],
+  node['zookeeper-platform']['prefix_bin']
 ].each do |path|
   directory path do
     owner 'root'
@@ -41,16 +41,16 @@ end
 ark "zookeeper" do
   action        :install
   url           "#{zookeeper_url}/#{zookeeper_artifact}"
-  prefix_root   node['zookeeper-cluster']['prefix_root']
-  prefix_home   node['zookeeper-cluster']['prefix_home']
-  prefix_bin    node['zookeeper-cluster']['prefix_bin']
+  prefix_root   node['zookeeper-platform']['prefix_root']
+  prefix_home   node['zookeeper-platform']['prefix_home']
+  prefix_bin    node['zookeeper-platform']['prefix_bin']
   has_binaries  [] # zookeeper script does not work when linked
-  checksum      node['zookeeper-cluster']['checksum']
-  version       node['zookeeper-cluster']['version']
+  checksum      node['zookeeper-platform']['checksum']
+  version       node['zookeeper-platform']['version']
 end
 
 # Symbolic link for zookeeper jar to simplify service file
-install_dir = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper"
+install_dir = "#{node['zookeeper-platform']['prefix_home']}/zookeeper"
 link "#{install_dir}/zookeeper.jar" do
   to "#{install_dir}/zookeeper-#{version}.jar"
 end

@@ -15,33 +15,33 @@
 #
 
 # Zookeeper package
-default['zookeeper-cluster']['version']     = '3.4.6'
-default['zookeeper-cluster']['checksum']    =
+default['zookeeper-platform']['version']     = '3.4.6'
+default['zookeeper-platform']['checksum']    =
   '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
-default['zookeeper-cluster']['mirror']      =
+default['zookeeper-platform']['mirror']      =
   'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'
 
 # Zookeeper installation
-default['zookeeper-cluster']['user']        = 'zookeeper'
-default['zookeeper-cluster']['prefix_root'] = '/opt'
-default['zookeeper-cluster']['prefix_home'] = '/opt'
-default['zookeeper-cluster']['prefix_bin']  = '/opt/bin'
-default['zookeeper-cluster']['log_dir']     = '/var/opt/zookeeper/log'
-default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
-default['zookeeper-cluster']['java']        = {
+default['zookeeper-platform']['user']        = 'zookeeper'
+default['zookeeper-platform']['prefix_root'] = '/opt'
+default['zookeeper-platform']['prefix_home'] = '/opt'
+default['zookeeper-platform']['prefix_bin']  = '/opt/bin'
+default['zookeeper-platform']['log_dir']     = '/var/opt/zookeeper/log'
+default['zookeeper-platform']['data_dir']    = '/var/opt/zookeeper/lib'
+default['zookeeper-platform']['java']        = {
   'centos' => 'java-1.8.0-openjdk-headless'
 }
-default['zookeeper-cluster']['auto_restart']= true
+default['zookeeper-platform']['auto_restart']= true
 
 # Cluster configuration
-default['zookeeper-cluster']['role']        = 'zookeeper-cluster'
-default['zookeeper-cluster']['hosts']       = [] # Use search when empty
-default['zookeeper-cluster']['size']        = 3 # Ignored hosts is non empty
+default['zookeeper-platform']['role']        = 'zookeeper-platform'
+default['zookeeper-platform']['hosts']       = [] # Use search when empty
+default['zookeeper-platform']['size']        = 3 # Ignored hosts is non empty
 
 # Zookeeper configuration
-default['zookeeper-cluster']['config']      = {
+default['zookeeper-platform']['config']      = {
   'clientPort' => 2181,
-  'dataDir' => node['zookeeper-cluster']['data_dir'],
+  'dataDir' => node['zookeeper-platform']['data_dir'],
   'tickTime' => 2000,
   'initLimit' => 5,
   'syncLimit' => 2

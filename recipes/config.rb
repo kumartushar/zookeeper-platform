@@ -15,11 +15,11 @@
 #
 
 ::Chef::Recipe.send(:include, ClusterSearch)
-cluster = cluster_search(node['zookeeper-cluster'])
+cluster = cluster_search(node['zookeeper-platform'])
 return if cluster == nil
 
 # Generate config
-config = node['zookeeper-cluster']['config'].dup
+config = node['zookeeper-platform']['config'].dup
 cluster['hosts'].each_with_index {
   |v,i| config["server.#{i+1}"]="#{v}:2888:3888"
 }
@@ -27,12 +27,12 @@ puts "Configuration: #{config}"
 
 # Create work directories
 [
-  node['zookeeper-cluster']['log_dir'],
-  node['zookeeper-cluster']['data_dir'],
+  node['zookeeper-platform']['log_dir'],
+  node['zookeeper-platform']['data_dir'],
 ].each do |path|
   directory path do
-    owner node['zookeeper-cluster']['user']
-    group node['zookeeper-cluster']['user']
+    owner node['zookeeper-platform']['user']
+    group node['zookeeper-platform']['user']
     mode '0755'
     recursive true
     action :create
@@ -40,7 +40,7 @@ puts "Configuration: #{config}"
 end
 
 # General zookeeper config
-config_path = "#{node['zookeeper-cluster']['prefix_home']}/zookeeper/conf"
+config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
 
 template "#{config_path}/zoo.cfg" do
   variables     :config => config
@@ -49,7 +49,7 @@ template "#{config_path}/zoo.cfg" do
 end
 
 # Create myid file
-template "#{node['zookeeper-cluster']['data_dir']}/myid" do
+template "#{node['zookeeper-platform']['data_dir']}/myid" do
   variables     :my_id => cluster['my_id']
   mode          "0644"
   source        "myid.erb"
