@@ -36,7 +36,7 @@ default['zookeeper-cluster']['prefix_bin']  = '/opt/bin'
 default['zookeeper-cluster']['log_dir']     = '/var/opt/zookeeper/log'
 default['zookeeper-cluster']['data_dir']    = '/var/opt/zookeeper/lib'
 default['zookeeper-cluster']['java']        = {
-  'centos' => 'java-1.8.0-openjdk'
+  'centos' => 'java-1.8.0-openjdk-headless'
 }
 default['zookeeper-cluster']['auto_restart']= true
 
