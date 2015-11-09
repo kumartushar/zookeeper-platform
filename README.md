@@ -11,6 +11,21 @@ ZooKeeper on <http://zookeeper.apache.org>.
 This cookbook focuses on deploying a Zookeeper cluster via Chef on *systemd*
 managed distributions.
 
+Requirements
+------------
+
+### Cookbooks and gems
+
+Declared in [metadata.rb](metadata.rb) and in [Gemfile](Gemfile).
+
+### Platforms
+
+A *systemd* managed distribution:
+- RHEL Family 7, tested on Centos
+
+Note: it should work fine on Debian 8 but the official docker image does not
+allow systemd to work easily, so it could not be tested.
+
 Usage
 -----
 
@@ -58,25 +73,6 @@ workstation, each in its own docker host. You can then access it with:
 
     zkCli.sh -server $(docker inspect \
       --format '{{.NetworkSettings.IPAddress}}' zookeeper-kitchen-01)
-
-Requirements
-------------
-
-### Cookbooks
-
-Declared in [metadata.rb](metadata.rb).
-
-### Gems
-
-Declared in [Gemfile](Gemfile).
-
-### Platforms
-
-A *systemd* managed distribution:
-- RHEL Family 7, tested on Centos
-
-Note: it should work fine on Debian 8 but the official docker image does not
-allow systemd to work easily, so it could not be tested.
 
 Attributes
 ----------
