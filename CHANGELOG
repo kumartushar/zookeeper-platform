@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.1.0
+-----
+
+- Make JVM options and Log4j properties configurable
+- Fix a typo breaking the auto-restart when zoo.cfg is modified
+- Reorganize README:
+  + Move changelog from README to CHANGELOG
+  + Move contribution guide to CONTRIBUTING.md
+  + Reorder README
+- Add Apache 2 license file
+
 1.0.0
 -----
 
