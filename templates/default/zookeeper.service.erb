@@ -8,12 +8,15 @@ Group=<%= @node['zookeeper-platform']['user'] %>
 SyslogIdentifier=zookeeper
 Restart=on-failure
 ExecStart=/usr/bin/java \
-  -Dzookeeper.log.dir=<%= @node['zookeeper-platform']['log_dir'] %> \
-  -Dzookeeper.root.logger=INFO,ROLLINGFILE \
   -cp <%= @classpath %> \
   -Dlog4j.configuration=file:<%= @log4j_file %> \
-  -Dcom.sun.management.jmxremote \
-  -Dcom.sun.management.jmxremote.local.only=false \
+  <% @node['zookeeper-platform']['jvm_opts'].each do |key,value| %>
+    <% unless value.nil? %>
+      <%= key %>=<%= value %> \
+    <% else %>
+      <%= key %> \
+    <% end %>
+  <% end %>
   org.apache.zookeeper.server.quorum.QuorumPeerMain \
   <%= @config_file %>
 

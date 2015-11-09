@@ -57,3 +57,37 @@ default['zookeeper-platform']['config']      = {
   'initLimit' => 5,
   'syncLimit' => 2
 }
+
+# JVM configuration
+# {key => value} which gives "key=value" or just "key" if value is nil
+default['zookeeper-platform']['jvm_opts'] = {
+  '-Dcom.sun.management.jmxremote' => nil,
+  '-Dcom.sun.management.jmxremote.authenticate' => false,
+  '-Dcom.sun.management.jmxremote.ssl' => false,
+  '-Dcom.sun.management.jmxremote.port' => 4000
+}
+
+# log4j configuration
+default['zookeeper-platform']['log4j'] = {
+  'log4j.rootLogger' => 'INFO, ROLLINGFILE',
+  'log4j.appender.CONSOLE' => 'org.apache.log4j.ConsoleAppender',
+  'log4j.appender.CONSOLE.Threshold' => 'INFO',
+  'log4j.appender.CONSOLE.layout' => 'org.apache.log4j.PatternLayout',
+  'log4j.appender.CONSOLE.layout.ConversionPattern' =>
+    '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L] - %m%n',
+  'log4j.appender.ROLLINGFILE' => 'org.apache.log4j.RollingFileAppender',
+  'log4j.appender.ROLLINGFILE.Threshold' => 'INFO',
+  'log4j.appender.ROLLINGFILE.File' =>
+    "#{node['zookeeper-platform']['log_dir']}/zookeeper.log",
+  'log4j.appender.ROLLINGFILE.MaxFileSize' => '10MB',
+  'log4j.appender.ROLLINGFILE.layout' => 'org.apache.log4j.PatternLayout',
+  'log4j.appender.ROLLINGFILE.layout.ConversionPattern' =>
+    '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L] - %m%n',
+  'log4j.appender.TRACEFILE' => 'org.apache.log4j.FileAppender',
+  'log4j.appender.TRACEFILE.Threshold' => 'TRACE',
+  'log4j.appender.TRACEFILE.File' =>
+    "#{node['zookeeper-platform']['log_dir']}/zookeeper_trace.log",
+  'log4j.appender.TRACEFILE.layout' => 'org.apache.log4j.PatternLayout',
+  'log4j.appender.TRACEFILE.layout.ConversionPattern' =>
+    '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L][%x] - %m%n'
+}

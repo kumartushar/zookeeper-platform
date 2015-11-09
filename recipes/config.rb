@@ -48,6 +48,13 @@ template "#{config_path}/zoo.cfg" do
   source        "zoo.cfg.erb"
 end
 
+# Log4j
+template "#{config_path}/log4j.properties" do
+  source 'properties.erb'
+  mode '644'
+  variables :config => node['zookeeper-platform']['log4j']
+end
+
 # Create myid file
 template "#{node['zookeeper-platform']['data_dir']}/myid" do
   variables     :my_id => cluster['my_id']
