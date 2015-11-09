@@ -59,13 +59,6 @@ workstation, each in its own docker host. You can then access it with:
     zkCli.sh -server $(docker inspect \
       --format '{{.NetworkSettings.IPAddress}}' zookeeper-kitchen-01)
 
-Changes
--------
-
-### 1.0.0:
-
-- Initial version with Centos 7 support
-
 Requirements
 ------------
 
@@ -124,6 +117,11 @@ Resources/Providers
 -------------------
 
 None.
+
+Changelog
+---------
+
+Available in [CHANGELOG](CHANGELOG).
 
 Contributing
 ------------
