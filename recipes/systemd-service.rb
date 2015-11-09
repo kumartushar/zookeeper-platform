@@ -44,7 +44,7 @@ package java_package if !java_package.to_s.empty?
 # Configuration files to be subscribed
 if node['zookeeper-platform']['auto_restart']
   config_files = [
-    "#{config_path}/zoo.cfg}",
+    "#{config_path}/zoo.cfg",
     "#{config_path}/log4j.properties",
     "#{node['zookeeper-platform']['data_dir']}/myid"
   ].map do |path|
