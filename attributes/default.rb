@@ -64,7 +64,8 @@ default['zookeeper-platform']['jvm_opts'] = {
   '-Dcom.sun.management.jmxremote' => nil,
   '-Dcom.sun.management.jmxremote.authenticate' => false,
   '-Dcom.sun.management.jmxremote.ssl' => false,
-  '-Dcom.sun.management.jmxremote.port' => 4000
+  '-Dcom.sun.management.jmxremote.port' => 2191,
+  '-Djava.rmi.server.hostname' => node['fqdn']
 }
 
 # log4j configuration
