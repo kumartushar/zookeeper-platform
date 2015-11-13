@@ -10,13 +10,9 @@ Restart=on-failure
 ExecStart=/usr/bin/java \
   -cp <%= @classpath %> \
   -Dlog4j.configuration=file:<%= @log4j_file %> \
-  <% @node['zookeeper-platform']['jvm_opts'].each do |key,value| %>
-    <% unless value.nil? %>
-      <%= key %>=<%= value %> \
-    <% else %>
-      <%= key %> \
-    <% end %>
-  <% end %>
+<% @node['zookeeper-platform']['jvm_opts'].each do |key,value| %>
+  <%= key %><% unless value.nil? %>=<%= value %><% end %> \
+<% end %>
   org.apache.zookeeper.server.quorum.QuorumPeerMain \
   <%= @config_file %>
 
