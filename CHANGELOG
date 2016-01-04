@@ -1,6 +1,23 @@
 Changelog
 =========
 
+1.2.0
+-----
+
+- Update default zookeeper version to 3.4.7
+- Use Apache archive as mirror (to allow all versions)
+- Change jmx port to 2191 (2181+10) & force hostname
+- Rationalize docker provision to limit number of images
+  + Unify the provision command of centos 7 and dnsdock images among the
+    different projects so that they can share the docker cache and limit
+    the number of images
+  + Fix docker image for centos 7.2.1511 (add iproute)
+- Fix rubocop offences except for monkey patches
+  + Potential breaking change (minor effect), rename:
+    - recipes/create-user.rb -> recipes/create_user.rb
+    - recipes/systemd-service.rb -> recipes/systemd_service.rb
+- Use a shorter expression in zookeeper.service
+
 1.1.0
 -----
 
