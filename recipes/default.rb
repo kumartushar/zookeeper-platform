@@ -16,6 +16,6 @@
 
 # Run other recipes in order to install and configure a Zookeeper cluster
 include_recipe "#{cookbook_name}::install"
-include_recipe "#{cookbook_name}::create-user"
+include_recipe "#{cookbook_name}::create_user"
 include_recipe "#{cookbook_name}::config"
-include_recipe "#{cookbook_name}::systemd-service"
+include_recipe "#{cookbook_name}::systemd_service"

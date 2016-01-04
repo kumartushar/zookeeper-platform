@@ -37,7 +37,7 @@ role in the runlists of the nodes you want to use for your cluster. By default,
 you need exactly 3 nodes.
 
 By default, this cookbook installs *openjdk* from the official repositories
-*(openjdk 8 on centos 7)* in **systemd-service** recipe, just before
+*(openjdk 8 on centos 7)* in **systemd\_service** recipe, just before
 launching the service. You can deactivate this behavior by setting
 `node['zookeeper-platform']['java']` to `""`, or choose your package by setting
 the package name in `node['zookeeper-platform']['java'][node[:platform]]`.
@@ -87,14 +87,14 @@ Recipes
 
 ### default
 
-Run *install*, *create-user*, *config* and *systemd-service* recipes, in that
+Run *install*, *create\_user*, *config* and *systemd\_service* recipes, in that
 order.
 
 ### install
 
 Install zookeeper with *ark* cookbook.
 
-### create-user
+### create\_user
 
 Create zookeeper system user and group.
 
@@ -104,7 +104,7 @@ Generate nodes list by search or by using hosts attribute. Merge it with base
 configuration, then install *myid* and *zoo.cfg* files. Create work
 directories: for data and logs.
 
-### systemd-service
+### systemd\_service
 
 Install zookeeper service for systemd, enable and start it. Install *java*
 package by default.
