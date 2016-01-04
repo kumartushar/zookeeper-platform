@@ -16,19 +16,18 @@
 
 ::Chef::Recipe.send(:include, ClusterSearch)
 cluster = cluster_search(node['zookeeper-platform'])
-return if cluster == nil
+return if cluster.nil?
 
 # Generate config
 config = node['zookeeper-platform']['config'].dup
-cluster['hosts'].each_with_index {
-  |v,i| config["server.#{i+1}"]="#{v}:2888:3888"
-}
-puts "Configuration: #{config}"
+cluster['hosts'].each_with_index do |v, i|
+  config["server.#{i + 1}"] = "#{v}:2888:3888"
+end
 
 # Create work directories
 [
   node['zookeeper-platform']['log_dir'],
-  node['zookeeper-platform']['data_dir'],
+  node['zookeeper-platform']['data_dir']
 ].each do |path|
   directory path do
     owner node['zookeeper-platform']['user']
@@ -43,21 +42,21 @@ end
 config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
 
 template "#{config_path}/zoo.cfg" do
-  variables     :config => config
-  mode          "0644"
-  source        "zoo.cfg.erb"
+  variables config: config
+  mode '0644'
+  source 'zoo.cfg.erb'
 end
 
 # Log4j
 template "#{config_path}/log4j.properties" do
   source 'properties.erb'
   mode '644'
-  variables :config => node['zookeeper-platform']['log4j']
+  variables config: node['zookeeper-platform']['log4j']
 end
 
 # Create myid file
 template "#{node['zookeeper-platform']['data_dir']}/myid" do
-  variables     :my_id => cluster['my_id']
-  mode          "0644"
-  source        "myid.erb"
+  variables my_id: cluster['my_id']
+  mode '0644'
+  source 'myid.erb'
 end

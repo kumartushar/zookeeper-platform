@@ -19,27 +19,27 @@ config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
 install_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper"
 
 service_config = {
-  :classpath => "#{install_path}/zookeeper.jar:#{install_path}/lib/*",
-  :config_file => "#{config_path}/zoo.cfg",
-  :log4j_file => "#{config_path}/log4j.properties"
+  classpath: "#{install_path}/zookeeper.jar:#{install_path}/lib/*",
+  config_file: "#{config_path}/zoo.cfg",
+  log4j_file: "#{config_path}/log4j.properties"
 }
 
 # Install service file, reload systemd daemon if necessary
-execute "systemd-reload" do
-  command "systemctl daemon-reload"
+execute 'systemd-reload' do
+  command 'systemctl daemon-reload'
   action :nothing
 end
 
-template "/usr/lib/systemd/system/zookeeper.service" do
-  variables     service_config
-  mode          "0644"
-  source        "zookeeper.service.erb"
-  notifies      :run, 'execute[systemd-reload]', :immediately
+template '/usr/lib/systemd/system/zookeeper.service' do
+  variables service_config
+  mode '0644'
+  source 'zookeeper.service.erb'
+  notifies :run, 'execute[systemd-reload]', :immediately
 end
 
 # Java is needed by Kafka, can install it with package
 java_package = node['zookeeper-platform']['java'][node['platform']]
-package java_package if !java_package.to_s.empty?
+package java_package unless java_package.to_s.empty?
 
 # Configuration files to be subscribed
 if node['zookeeper-platform']['auto_restart']
@@ -54,9 +54,9 @@ else config_files = []
 end
 
 # Enable/Start service
-service "zookeeper" do
+service 'zookeeper' do
   provider Chef::Provider::Service::Systemd
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  supports status: true, restart: true, reload: true
+  action [:enable, :start]
   subscribes :restart, config_files
 end

@@ -38,15 +38,15 @@ zookeeper_artifact = "zookeeper-#{version}.tar.gz"
 end
 
 # Install zookeeper package with ark
-ark "zookeeper" do
-  action        :install
-  url           "#{zookeeper_url}/#{zookeeper_artifact}"
-  prefix_root   node['zookeeper-platform']['prefix_root']
-  prefix_home   node['zookeeper-platform']['prefix_home']
-  prefix_bin    node['zookeeper-platform']['prefix_bin']
-  has_binaries  [] # zookeeper script does not work when linked
-  checksum      node['zookeeper-platform']['checksum']
-  version       node['zookeeper-platform']['version']
+ark 'zookeeper' do
+  action :install
+  url "#{zookeeper_url}/#{zookeeper_artifact}"
+  prefix_root node['zookeeper-platform']['prefix_root']
+  prefix_home node['zookeeper-platform']['prefix_home']
+  prefix_bin node['zookeeper-platform']['prefix_bin']
+  has_binaries [] # zookeeper script does not work when linked
+  checksum node['zookeeper-platform']['checksum']
+  version node['zookeeper-platform']['version']
 end
 
 # Symbolic link for zookeeper jar to simplify service file

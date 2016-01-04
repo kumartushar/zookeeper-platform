@@ -15,42 +15,42 @@
 #
 
 # Zookeeper package
-default['zookeeper-platform']['version']     = '3.4.7'
-default['zookeeper-platform']['checksum']    =
+default['zookeeper-platform']['version'] = '3.4.7'
+default['zookeeper-platform']['checksum'] =
   '2e043e04c4da82fbdb38a68e585f3317535b3842c726e0993312948afcc83870'
-default['zookeeper-platform']['mirror']      =
+default['zookeeper-platform']['mirror'] =
   'http://archive.apache.org/dist/zookeeper/'
 
 # Zookeeper installation
 # User and group of zookeeper process
-default['zookeeper-platform']['user']        = 'zookeeper'
+default['zookeeper-platform']['user'] = 'zookeeper'
 # Where to put installation dir
 default['zookeeper-platform']['prefix_root'] = '/opt'
 # Where to link installation dir
 default['zookeeper-platform']['prefix_home'] = '/opt'
 # Where to link binaries
-default['zookeeper-platform']['prefix_bin']  = '/opt/bin'
+default['zookeeper-platform']['prefix_bin'] = '/opt/bin'
 # Log directory
-default['zookeeper-platform']['log_dir']     = '/var/opt/zookeeper/log'
+default['zookeeper-platform']['log_dir'] = '/var/opt/zookeeper/log'
 # Data directory
-default['zookeeper-platform']['data_dir']    = '/var/opt/zookeeper/lib'
+default['zookeeper-platform']['data_dir'] = '/var/opt/zookeeper/lib'
 # Java package to install by platform
-default['zookeeper-platform']['java']        = {
+default['zookeeper-platform']['java'] = {
   'centos' => 'java-1.8.0-openjdk-headless'
 }
 # Restart Zookeeper service if a configuration file change
-default['zookeeper-platform']['auto_restart']= true
+default['zookeeper-platform']['auto_restart'] = true
 
 # Cluster configuration
 # Role used by the search to find other nodes of the cluster
-default['zookeeper-platform']['role']        = 'zookeeper-platform'
+default['zookeeper-platform']['role'] = 'zookeeper-platform'
 # Hosts of the cluster, deactivate search if not empty
-default['zookeeper-platform']['hosts']       = []
+default['zookeeper-platform']['hosts'] = []
 # Expected size of the cluster. Ignored if hosts is not empty
-default['zookeeper-platform']['size']        = 3
+default['zookeeper-platform']['size'] = 3
 
 # Zookeeper configuration
-default['zookeeper-platform']['config']      = {
+default['zookeeper-platform']['config'] = {
   'clientPort' => 2181,
   'dataDir' => node['zookeeper-platform']['data_dir'],
   'tickTime' => 2000,
