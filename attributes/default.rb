@@ -15,11 +15,11 @@
 #
 
 # Zookeeper package
-default['zookeeper-platform']['version']     = '3.4.6'
+default['zookeeper-platform']['version']     = '3.4.7'
 default['zookeeper-platform']['checksum']    =
-  '01b3938547cd620dc4c93efe07c0360411f4a66962a70500b163b59014046994'
+  '2e043e04c4da82fbdb38a68e585f3317535b3842c726e0993312948afcc83870'
 default['zookeeper-platform']['mirror']      =
-  'http://apache.mirrors.ovh.net/ftp.apache.org/dist/zookeeper'
+  'http://archive.apache.org/dist/zookeeper/'
 
 # Zookeeper installation
 # User and group of zookeeper process
