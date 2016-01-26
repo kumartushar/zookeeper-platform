@@ -27,8 +27,9 @@ zookeeper_artifact = "zookeeper-#{version}.tar.gz"
   node['zookeeper-platform']['prefix_root'],
   node['zookeeper-platform']['prefix_home'],
   node['zookeeper-platform']['prefix_bin']
-].each do |path|
-  directory path do
+].uniq.each do |dir_path|
+  directory "zookeeper-platform:#{dir_path}" do
+    path dir_path
     owner 'root'
     group 'root'
     mode '0755'

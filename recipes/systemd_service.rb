@@ -25,7 +25,7 @@ service_config = {
 }
 
 # Install service file, reload systemd daemon if necessary
-execute 'systemd-reload' do
+execute 'zookeeper-platform:systemd-reload' do
   command 'systemctl daemon-reload'
   action :nothing
 end
@@ -34,7 +34,7 @@ template '/usr/lib/systemd/system/zookeeper.service' do
   variables service_config
   mode '0644'
   source 'zookeeper.service.erb'
-  notifies :run, 'execute[systemd-reload]', :immediately
+  notifies :run, 'execute[zookeeper-platform:systemd-reload]', :immediately
 end
 
 # Java is needed by Kafka, can install it with package
