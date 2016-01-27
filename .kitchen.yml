@@ -29,41 +29,16 @@ provisioner:
 
 platforms:
   - name: centos-7
-    driver_config:
-      image: sbernard/centos-systemd-kitchen
-      platform: centos
-      # The two following lines are needed by systemd
-      volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
-      command: /usr/sbin/init
 
 suites:
   # Use dnsdock to provide a container name resolution
   - name: dnsdock
-    includes: centos-7
     driver:
+      image: sbernard/dnsdock-centos-kitchen
+      volume: /var/run/docker.sock:/var/run/docker.sock:ro
+      command: /opt/bin/dnsdock -domain=kitchen
       hostname: dnsdock-zookeeper
       container_name: dnsdock-zookeeper
-      volume:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
-        - /var/run/docker.sock:/opt/run/docker.sock:ro
-      run_command:
-        - > # Everything needed to make dnsdock work in kitchen
-          yum install -y go tar git &&
-          mkdir -p /opt/go &&
-          export GOPATH=/opt/go && export PATH=$PATH:/opt/go/bin &&
-          go get -v github.com/tools/godep &&
-          mkdir -p /opt/go/src/github.com/tonistiigi &&
-          cd /opt/go/src/github.com/tonistiigi &&
-          curl https://codeload.github.com/tonistiigi/dnsdock/tar.gz/v1.5.0 |
-          tar xz && cd dnsdock-1.5.0 &&
-          godep restore && go build &&
-          mv dnsdock-1.5.0 /opt/go/bin/dnsdock &&
-          echo -e '[Unit]\nDescription=dnsdock\n
-          [Service]\nExecStart=/opt/go/bin/dnsdock
-          -docker unix:///opt/run/docker.sock -domain=kitchen\n
-          [Install]\nWantedBy=multi-user.target'
-          > /usr/lib/systemd/system/dnsdock.service &&
-          systemctl enable dnsdock
 
 # Set var ip_of to use it in dns settings
 <% ip_of = "docker inspect --format '{{.NetworkSettings.IPAddress}}'" %>
@@ -72,6 +47,9 @@ suites:
   <% ("01".."#{n}").each do |i| %>
   - name: <%= name %>-<%= i %>
     driver:
+      image: sbernard/centos-systemd-kitchen
+      volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
+      command: /usr/lib/systemd/systemd
       hostname: <%= name %>-kitchen-<%= i %>.kitchen
       container_name: <%= name %>-kitchen-<%= i %>
       dns: $(<%= ip_of %> dnsdock-zookeeper)
