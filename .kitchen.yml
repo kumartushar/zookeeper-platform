@@ -17,12 +17,12 @@
 # Customize Kitchen with some monkey patching:
 # - Suites scheduler
 #   <% load "#{File.dirname(__FILE__)}/test/kitchen_command.rb" %>
-# - improve login and destroy with docker driver (depend on systemd)
-#   <% load "#{File.dirname(__FILE__)}/test/kitchen_docker.rb" %>
 
 driver:
-  name: docker
-  use_sudo: false
+  name: docker_cli
+
+transport:
+  name: docker_cli
 
 provisioner:
   name: chef_zero
@@ -30,25 +30,11 @@ provisioner:
 platforms:
   - name: centos-7
     driver_config:
-      # The two following lines are needed by systemd to access cgroups
+      image: sbernard/centos-systemd-kitchen
+      platform: centos
+      # The two following lines are needed by systemd
       volume: /sys/fs/cgroup:/sys/fs/cgroup:ro
-      privileged: true
-      run_command: /usr/sbin/init # Start systemd as root process
-      # general provisionning for kitchen
-      require_chef_omnibus: false
-      provision_command:
-        - >
-          curl -L https://www.getchef.com/chef/install.sh | bash &&
-          GEM_HOME=/tmp/verifier/gems GEM_PATH=/tmp/verifier/gems
-          GEM_CACHE=/tmp/verifier/gems/cache
-          /opt/chef/embedded/bin/gem install
-          thor busser busser-serverspec serverspec bundler &&
-          chown -R kitchen:kitchen /tmp/verifier &&
-          yum install -y iproute
-        - yum install -y net-tools patch make automake autoconf gcc &&
-          GEM_HOME=/tmp/verifier/gems GEM_PATH=/tmp/verifier/gems
-          GEM_CACHE=/tmp/verifier/gems/cache
-          /opt/chef/embedded/bin/gem install zookeeper
+      command: /usr/sbin/init
 
 suites:
   # Use dnsdock to provide a container name resolution
@@ -56,14 +42,13 @@ suites:
     includes: centos-7
     driver:
       hostname: dnsdock-zookeeper
-      instance_name: dnsdock-zookeeper
+      container_name: dnsdock-zookeeper
       volume:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
         - /var/run/docker.sock:/opt/run/docker.sock:ro
-      provision_command:
+      run_command:
         - > # Everything needed to make dnsdock work in kitchen
-          curl -L https://www.getchef.com/chef/install.sh | bash &&
-          yum install -y go tar git hostname &&
+          yum install -y go tar git &&
           mkdir -p /opt/go &&
           export GOPATH=/opt/go && export PATH=$PATH:/opt/go/bin &&
           go get -v github.com/tools/godep &&
@@ -80,24 +65,17 @@ suites:
           > /usr/lib/systemd/system/dnsdock.service &&
           systemctl enable dnsdock
 
-  - name: zookeeper-01
+# Set var ip_of to use it in dns settings
+<% ip_of = "docker inspect --format '{{.NetworkSettings.IPAddress}}'" %>
+# Generate different types of nodes
+<% { 'zookeeper' => 3 }.each do |name,n| %>
+  <% ("01".."#{n}").each do |i| %>
+  - name: <%= name %>-<%= i %>
     driver:
-      hostname: zookeeper-kitchen-01.kitchen
-      instance_name: zookeeper-kitchen-01
-      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
+      hostname: <%= name %>-kitchen-<%= i %>.kitchen
+      container_name: <%= name %>-kitchen-<%= i %>
+      dns: $(<%= ip_of %> dnsdock-zookeeper)
     run_list:
-      - role[zookeeper-kitchen]
-  - name: zookeeper-02
-    driver:
-      hostname: zookeeper-kitchen-02.kitchen
-      instance_name: zookeeper-kitchen-02
-      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
-    run_list:
-      - role[zookeeper-kitchen]
-  - name: zookeeper-03
-    driver:
-      hostname: zookeeper-kitchen-03.kitchen
-      instance_name: zookeeper-kitchen-03
-      dns: $(docker inspect --format '{{.NetworkSettings.IPAddress}}' dnsdock-zookeeper)
-    run_list:
-      - role[zookeeper-kitchen]
+      - role[<%= name %>-kitchen]
+  <% end %>
+<% end %>
