@@ -53,21 +53,24 @@ describe 'Zookeeper Configuration' do
 end
 
 describe 'Zookeeper Cluster' do
-  it 'should create /kitchen containing "Data"' do
+  it 'should locally create /kitchen containing "Data"' do
     # Create a node locally
-    client = Zookeeper.new('localhost:2181')
-    client.create(path: '/kitchen', data: 'Data')
-    client.close
+    expect(zoo_cmd('create /kitchen Data')).to contain("Created /kitchen\n")
   end
 
   # Check on all nodes
   %w(01 02 03).each do |i|
     it "should have /kitchen on zookeeper-kitchen-#{i}.kitchen" do
-      client = Zookeeper.new("zookeeper-kitchen-#{i}.kitchen:2181")
-      data = client.get(path: '/kitchen')
-      expect(data[:stat].exists?).to eq(true)
-      expect(data[:data]).to eq('Data')
-      client.close
+      get = zoo_cmd('get /kitchen', "zookeeper-kitchen-#{i}.kitchen:2181")
+      expect(get).to contain("Data\n")
+    end
+    it "should NOT have /not_kitchen on zookeeper-kitchen-#{i}.kitchen" do
+      get = zoo_cmd('get /not_kitchen', "zookeeper-kitchen-#{i}.kitchen:2181")
+      expect(get).to contain("Node does not exist: /not_kitchen\n")
     end
   end
+end
+
+def zoo_cmd(cmd, server = 'localhost:2181')
+  `echo '#{cmd}' | /opt/zookeeper/bin/zkCli.sh -server #{server} 2>&1`
 end

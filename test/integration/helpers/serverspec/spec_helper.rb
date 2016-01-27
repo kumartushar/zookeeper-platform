@@ -17,6 +17,3 @@
 require 'serverspec'
 
 set :backend, :exec
-
-# Used in testing
-require 'zookeeper'
