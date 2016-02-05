@@ -17,6 +17,10 @@
 # Customize Kitchen with some monkey patching:
 # - Suites scheduler
 #   <% load "#{File.dirname(__FILE__)}/test/kitchen_command.rb" %>
+# - Create kitchen network if missing
+#   <% net_test = '! docker network ls | grep "kitchen" >/dev/null 2>&1' %>
+#   <% net_create = 'docker network create --driver bridge kitchen' %>
+#   <% `if #{net_test}; then #{net_create}; fi` %>
 
 driver:
   name: docker_cli
