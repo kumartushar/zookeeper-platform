@@ -21,7 +21,7 @@ Declared in [metadata.rb](metadata.rb) and in [Gemfile](Gemfile).
 ### Platforms
 
 A *systemd* managed distribution:
-- RHEL Family 7, tested on Centos
+- RHEL Family 7, tested on Centos 7.2
 
 Note: it should work fine on Debian 8 but the official docker image does not
 allow systemd to work easily, so it could not be tested.
@@ -61,7 +61,8 @@ and search deactivated.
 ### Test
 
 This cookbook is fully tested through the installation of a working 3-nodes
-cluster in docker hosts. This uses kitchen, docker and some monkey-patching.
+cluster in docker hosts. This uses kitchen (>= 1.5.0), docker (>= 1.10) and
+a small monkey-patch.
 
 For more information, see *.kitchen.yml* and *test* directory.
 
