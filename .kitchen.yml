@@ -35,8 +35,6 @@ platforms:
   - name: centos-7
 
 suites:
-# Set var ip_of to use it in dns settings
-<% ip_of = "docker inspect --format '{{.NetworkSettings.IPAddress}}'" %>
 # Generate different types of nodes
 <% { 'zookeeper' => 3 }.each do |name,n| %>
   <% ("01".."#{n}").each do |i| %>
