@@ -8,8 +8,7 @@ Apache ZooKeeper is an effort to develop and maintain an open-source server
 which enables highly reliable distributed coordination. Learn more about
 ZooKeeper on <http://zookeeper.apache.org>.
 
-This cookbook focuses on deploying a Zookeeper cluster via Chef on *systemd*
-managed distributions.
+This cookbook focuses on deploying a Zookeeper cluster via Chef.
 
 Requirements
 ------------
@@ -73,7 +72,8 @@ running `kitchen converge`, you will have a 3-nodes cluster available on your
 workstation, each in its own docker host. You can then access it with:
 
     zkCli.sh -server $(docker inspect \
-      --format '{{.NetworkSettings.IPAddress}}' zookeeper-kitchen-01)
+      --format '{{.NetworkSettings.Networks.kitchen.IPAddress}}' \
+      zookeeper-kitchen-01)
 
 Attributes
 ----------
