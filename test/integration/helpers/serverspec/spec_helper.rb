@@ -17,3 +17,7 @@
 require 'serverspec'
 
 set :backend, :exec
+
+def zoo_cmd(cmd, server = 'localhost:2181')
+  `echo '#{cmd}' | /opt/zookeeper/bin/zkCli.sh -server #{server} 2>&1`
+end

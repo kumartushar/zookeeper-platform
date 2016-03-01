@@ -53,9 +53,28 @@ describe 'Zookeeper Configuration' do
 end
 
 describe 'Zookeeper Cluster' do
+  check = lambda do |i|
+    r = zoo_cmd('ls /', "zookeeper-kitchen-#{i}.kitchen:2181")
+    r.include?('(CONNECTED)')
+  end
+
+  (1..10).each do |try|
+    puts "Waiting for Zookeeper cluster… Try ##{try}/10, waiting #{try - 1}s"
+    sleep(try)
+    break if %w(01 02 03).reduce(true) { |a, e| a && check.call(e) }
+  end
+
+  it 'should be totally connected' do
+    expect(%w(01 02 03).reduce(true) { |a, e| a && check.call(e) }).to be(true)
+  end
+
   it 'should locally create /kitchen containing "Data"' do
     # Create a node locally
-    expect(zoo_cmd('create /kitchen Data')).to contain("Created /kitchen\n")
+    expect(zoo_cmd('create /kitchen Data')).to(
+      contain("Created /kitchen\n").or(
+        contain("Node already exists: /kitchen\n")
+      )
+    )
   end
 
   # Check on all nodes
@@ -69,8 +88,4 @@ describe 'Zookeeper Cluster' do
       expect(get).to contain("Node does not exist: /not_kitchen\n")
     end
   end
-end
-
-def zoo_cmd(cmd, server = 'localhost:2181')
-  `echo '#{cmd}' | /opt/zookeeper/bin/zkCli.sh -server #{server} 2>&1`
 end
