@@ -15,9 +15,9 @@
 #
 
 # Zookeeper package
-default['zookeeper-platform']['version'] = '3.4.7'
+default['zookeeper-platform']['version'] = '3.4.8'
 default['zookeeper-platform']['checksum'] =
-  '2e043e04c4da82fbdb38a68e585f3317535b3842c726e0993312948afcc83870'
+  'f10a0b51f45c4f64c1fe69ef713abf9eb9571bc7385a82da892e83bb6c965e90'
 default['zookeeper-platform']['mirror'] =
   'http://archive.apache.org/dist/zookeeper/'
 
