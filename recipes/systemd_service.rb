@@ -30,7 +30,8 @@ execute 'zookeeper-platform:systemd-reload' do
   action :nothing
 end
 
-template '/usr/lib/systemd/system/zookeeper.service' do
+unit_file = "#{node['zookeeper-platform']['unit_path']}/zookeeper.service"
+template unit_file do
   variables service_config
   mode '0644'
   source 'zookeeper.service.erb'

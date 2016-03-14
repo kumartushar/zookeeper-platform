@@ -40,6 +40,8 @@ default['zookeeper-platform']['java'] = {
 }
 # Restart Zookeeper service if a configuration file change
 default['zookeeper-platform']['auto_restart'] = true
+# Systemd unit file path
+default['zookeeper-platform']['unit_path'] = '/etc/systemd/system'
 
 # Cluster configuration
 # Role used by the search to find other nodes of the cluster
