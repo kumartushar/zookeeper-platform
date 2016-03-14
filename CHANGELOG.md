@@ -5,11 +5,13 @@ Changelog
 -----
 
 Main:
+
 - Update default zookeeper version to 3.4.8
 
 Tests:
-- Use a special docker image, switch to docker_cli
-  + Switch kitchen driver from docker to docker_cli
+
+- Use a special docker image, switch to docker\_cli
+  + Switch kitchen driver from docker to docker\_cli
   + Use sbernard/centos-systemd-kitchen image instead of bare centos
   + Remove privileged mode :)
   + Remove some now useless monkey patching
@@ -21,7 +23,8 @@ Tests:
 - Remove dependency on zookeeper gem
 
 Misc:
-- Fix rubocop offenses in kitchen_command
+
+- Fix rubocop offenses in kitchen\_command
 - Give a specific name to resource to avoid cloning
 
 1.2.0
@@ -37,8 +40,8 @@ Misc:
   + Fix docker image for centos 7.2.1511 (add iproute)
 - Fix rubocop offences except for monkey patches
   + Potential breaking change (minor effect), rename:
-    - recipes/create-user.rb -> recipes/create_user.rb
-    - recipes/systemd-service.rb -> recipes/systemd_service.rb
+    - recipes/create-user.rb -> recipes/create\_user.rb
+    - recipes/systemd-service.rb -> recipes/systemd\_service.rb
 - Use a shorter expression in zookeeper.service
 
 1.1.0
