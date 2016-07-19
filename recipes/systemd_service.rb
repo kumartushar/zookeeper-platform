@@ -14,6 +14,10 @@
 # limitations under the License.
 #
 
+# We do not want to continue if the config is incorrect
+node.run_state[cookbook_name] ||= {}
+return if node.run_state[cookbook_name]['abort?']
+
 # Install and launch zookeeper service through systemd
 config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
 install_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper"

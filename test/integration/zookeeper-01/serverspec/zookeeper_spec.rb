@@ -41,9 +41,9 @@ describe 'Zookeeper Configuration' do
     initLimit=5
     syncLimit=2
     maxClientCnxns=100
-    server.1=zookeeper-kitchen-01.kitchen:2888:3888
-    server.2=zookeeper-kitchen-02.kitchen:2888:3888
-    server.3=zookeeper-kitchen-03.kitchen:2888:3888
+    server.1=zookeeper-01-centos-7:2888:3888
+    server.2=zookeeper-02-centos-7:2888:3888
+    server.3=zookeeper-03-centos-7:2888:3888
     eos
   end
 
@@ -54,7 +54,7 @@ end
 
 describe 'Zookeeper Cluster' do
   check = lambda do |i|
-    r = zoo_cmd('ls /', "zookeeper-kitchen-#{i}.kitchen:2181")
+    r = zoo_cmd('ls /', "zookeeper-#{i}-centos-7:2181")
     r.include?('(CONNECTED)')
   end
 
@@ -79,12 +79,12 @@ describe 'Zookeeper Cluster' do
 
   # Check on all nodes
   %w(01 02 03).each do |i|
-    it "should have /kitchen on zookeeper-kitchen-#{i}.kitchen" do
-      get = zoo_cmd('get /kitchen', "zookeeper-kitchen-#{i}.kitchen:2181")
+    it "should have /kitchen on zookeeper-#{i}-centos-7" do
+      get = zoo_cmd('get /kitchen', "zookeeper-#{i}-centos-7:2181")
       expect(get).to contain("Data\n")
     end
-    it "should NOT have /not_kitchen on zookeeper-kitchen-#{i}.kitchen" do
-      get = zoo_cmd('get /not_kitchen', "zookeeper-kitchen-#{i}.kitchen:2181")
+    it "should NOT have /not_kitchen on zookeeper-#{i}-centos-7" do
+      get = zoo_cmd('get /not_kitchen', "zookeeper-#{i}-centos-7:2181")
       expect(get).to contain("Node does not exist: /not_kitchen\n")
     end
   end

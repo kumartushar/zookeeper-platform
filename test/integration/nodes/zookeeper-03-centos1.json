@@ -1,8 +1,8 @@
 {
-  "id": "zookeeper-kitchen-01.kitchen",
+  "id": "zookeeper-03-centos-7",
   "run_list": [ "role[zookeeper-kitchen]" ],
   "automatic": {
-    "fqdn": "zookeeper-kitchen-01.kitchen",
+    "fqdn": "zookeeper-03-centos-7",
     "roles": ["zookeeper-kitchen"]
   }
 }

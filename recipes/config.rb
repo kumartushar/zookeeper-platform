@@ -16,7 +16,11 @@
 
 ::Chef::Recipe.send(:include, ClusterSearch)
 cluster = cluster_search(node['zookeeper-platform'])
-return if cluster.nil?
+node.run_state[cookbook_name] ||= {}
+if cluster.nil?
+  node.run_state[cookbook_name]['abort?'] = true
+  return
+end
 
 # Generate config
 config = node['zookeeper-platform']['config'].dup
