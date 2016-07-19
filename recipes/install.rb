@@ -15,7 +15,9 @@
 #
 
 # tar may not be installed by default
-package 'tar'
+package 'tar' do
+  retries node['zookeeper-platform']['package_retries']
+end
 
 # Shorten variables
 version = node['zookeeper-platform']['version']

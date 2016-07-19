@@ -40,7 +40,9 @@ end
 
 # Java is needed by Kafka, can install it with package
 java_package = node['zookeeper-platform']['java'][node['platform']]
-package java_package unless java_package.to_s.empty?
+package java_package do
+  retries node['zookeeper-platform']['package_retries']
+end unless java_package.to_s.empty?
 
 # Configuration files to be subscribed
 if node['zookeeper-platform']['auto_restart']

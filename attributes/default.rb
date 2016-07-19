@@ -94,3 +94,7 @@ default['zookeeper-platform']['log4j'] = {
   'log4j.appender.TRACEFILE.layout.ConversionPattern' =>
     '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L][%x] - %m%n'
 }
+
+# Configure retries for the package resources, default = global default (0)
+# (mostly used for test purpose)
+default['zookeeper-platform']['package_retries'] = nil
