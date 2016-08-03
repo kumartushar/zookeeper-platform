@@ -1,6 +1,28 @@
 Changelog
 =========
 
+1.4.0
+-----
+
+Main:
+
+- Make Systemd unit path configurable, change default to
+  "/etc/systemd/system" as recommended by official documentation
+
+Test:
+
+- Start Continuous Integration with gitlab-ci, use templated config
+- Add retry on package installations
+- Use skip\_preparation: true (image works without modification)
+- security\_opt: seccomp=unconfined (enable systemd on recent version)
+- Use instance\_host\_name which change node hostnames, adapt tests
+- Set package retries to 1 in tests
+- Abort cleanly if config is not ok (not enough node found)
+
+Misc:
+
+- Rewrite changelog in markdown
+
 1.3.0
 -----
 
