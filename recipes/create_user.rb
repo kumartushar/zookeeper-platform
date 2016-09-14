@@ -20,7 +20,7 @@ end
 
 user node['zookeeper-platform']['user'] do
   gid node['zookeeper-platform']['user']
-  shell '/bin/nologin'
+  shell '/sbin/nologin'
   system true
   action :create
 end
