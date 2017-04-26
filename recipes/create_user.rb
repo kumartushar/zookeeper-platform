@@ -15,11 +15,11 @@
 #
 
 # Create zookeeper-service group & user
-group node['zookeeper-platform']['user'] do
+group node[cookbook_name]['user'] do
 end
 
-user node['zookeeper-platform']['user'] do
-  gid node['zookeeper-platform']['user']
+user node[cookbook_name]['user'] do
+  gid node[cookbook_name]['user']
   shell '/sbin/nologin'
   system true
   action :create

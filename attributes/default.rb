@@ -14,47 +14,50 @@
 # limitations under the License.
 #
 
+# Set cookbook_name macro
+cookbook_name = 'zookeeper-platform'
+
 # Zookeeper package
-default['zookeeper-platform']['version'] = '3.4.10'
-default['zookeeper-platform']['checksum'] =
+default[cookbook_name]['version'] = '3.4.10'
+default[cookbook_name]['checksum'] =
   '7f7f5414e044ac11fee2a1e0bc225469f51fb0cdf821e67df762a43098223f27'
-default['zookeeper-platform']['mirror'] =
+default[cookbook_name]['mirror'] =
   'http://archive.apache.org/dist/zookeeper/'
 
 # Zookeeper installation
 # User and group of zookeeper process
-default['zookeeper-platform']['user'] = 'zookeeper'
+default[cookbook_name]['user'] = 'zookeeper'
 # Where to put installation dir
-default['zookeeper-platform']['prefix_root'] = '/opt'
+default[cookbook_name]['prefix_root'] = '/opt'
 # Where to link installation dir
-default['zookeeper-platform']['prefix_home'] = '/opt'
+default[cookbook_name]['prefix_home'] = '/opt'
 # Where to link binaries
-default['zookeeper-platform']['prefix_bin'] = '/opt/bin'
+default[cookbook_name]['prefix_bin'] = '/opt/bin'
 # Log directory
-default['zookeeper-platform']['log_dir'] = '/var/opt/zookeeper/log'
+default[cookbook_name]['log_dir'] = '/var/opt/zookeeper/log'
 # Data directory
-default['zookeeper-platform']['data_dir'] = '/var/opt/zookeeper/lib'
+default[cookbook_name]['data_dir'] = '/var/opt/zookeeper/lib'
 # Java package to install by platform
-default['zookeeper-platform']['java'] = {
+default[cookbook_name]['java'] = {
   'centos' => 'java-1.8.0-openjdk-headless'
 }
 # Restart Zookeeper service if a configuration file change
-default['zookeeper-platform']['auto_restart'] = true
+default[cookbook_name]['auto_restart'] = true
 # Systemd unit file path
-default['zookeeper-platform']['unit_path'] = '/etc/systemd/system'
+default[cookbook_name]['unit_path'] = '/etc/systemd/system'
 
 # Cluster configuration
 # Role used by the search to find other nodes of the cluster
-default['zookeeper-platform']['role'] = 'zookeeper-platform'
+default[cookbook_name]['role'] = cookbook_name
 # Hosts of the cluster, deactivate search if not empty
-default['zookeeper-platform']['hosts'] = []
+default[cookbook_name]['hosts'] = []
 # Expected size of the cluster. Ignored if hosts is not empty
-default['zookeeper-platform']['size'] = 3
+default[cookbook_name]['size'] = 3
 
 # Zookeeper configuration
-default['zookeeper-platform']['config'] = {
+default[cookbook_name]['config'] = {
   'clientPort' => 2181,
-  'dataDir' => node['zookeeper-platform']['data_dir'],
+  'dataDir' => node[cookbook_name]['data_dir'],
   'tickTime' => 2000,
   'initLimit' => 5,
   'syncLimit' => 2
@@ -62,7 +65,7 @@ default['zookeeper-platform']['config'] = {
 
 # JVM configuration
 # {key => value} which gives "key=value" or just "key" if value is nil
-default['zookeeper-platform']['jvm_opts'] = {
+default[cookbook_name]['jvm_opts'] = {
   '-Dcom.sun.management.jmxremote' => nil,
   '-Dcom.sun.management.jmxremote.authenticate' => false,
   '-Dcom.sun.management.jmxremote.ssl' => false,
@@ -71,7 +74,7 @@ default['zookeeper-platform']['jvm_opts'] = {
 }
 
 # log4j configuration
-default['zookeeper-platform']['log4j'] = {
+default[cookbook_name]['log4j'] = {
   'log4j.rootLogger' => 'INFO, ROLLINGFILE',
   'log4j.appender.CONSOLE' => 'org.apache.log4j.ConsoleAppender',
   'log4j.appender.CONSOLE.Threshold' => 'INFO',
@@ -81,7 +84,7 @@ default['zookeeper-platform']['log4j'] = {
   'log4j.appender.ROLLINGFILE' => 'org.apache.log4j.RollingFileAppender',
   'log4j.appender.ROLLINGFILE.Threshold' => 'INFO',
   'log4j.appender.ROLLINGFILE.File' =>
-    "#{node['zookeeper-platform']['log_dir']}/zookeeper.log",
+    "#{node[cookbook_name]['log_dir']}/zookeeper.log",
   'log4j.appender.ROLLINGFILE.MaxFileSize' => '10MB',
   'log4j.appender.ROLLINGFILE.layout' => 'org.apache.log4j.PatternLayout',
   'log4j.appender.ROLLINGFILE.layout.ConversionPattern' =>
@@ -89,7 +92,7 @@ default['zookeeper-platform']['log4j'] = {
   'log4j.appender.TRACEFILE' => 'org.apache.log4j.FileAppender',
   'log4j.appender.TRACEFILE.Threshold' => 'TRACE',
   'log4j.appender.TRACEFILE.File' =>
-    "#{node['zookeeper-platform']['log_dir']}/zookeeper_trace.log",
+    "#{node[cookbook_name]['log_dir']}/zookeeper_trace.log",
   'log4j.appender.TRACEFILE.layout' => 'org.apache.log4j.PatternLayout',
   'log4j.appender.TRACEFILE.layout.ConversionPattern' =>
     '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L][%x] - %m%n'
@@ -97,4 +100,4 @@ default['zookeeper-platform']['log4j'] = {
 
 # Configure retries for the package resources, default = global default (0)
 # (mostly used for test purpose)
-default['zookeeper-platform']['package_retries'] = nil
+default[cookbook_name]['package_retries'] = nil

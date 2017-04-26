@@ -19,8 +19,8 @@ node.run_state[cookbook_name] ||= {}
 return if node.run_state[cookbook_name]['abort?']
 
 # Install and launch zookeeper service through systemd
-config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
-install_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper"
+config_path = "#{node[cookbook_name]['prefix_home']}/zookeeper/conf"
+install_path = "#{node[cookbook_name]['prefix_home']}/zookeeper"
 
 service_config = {
   classpath: "#{install_path}/zookeeper.jar:#{install_path}/lib/*",
@@ -34,7 +34,7 @@ execute 'zookeeper-platform:systemd-reload' do
   action :nothing
 end
 
-unit_file = "#{node['zookeeper-platform']['unit_path']}/zookeeper.service"
+unit_file = "#{node[cookbook_name]['unit_path']}/zookeeper.service"
 template unit_file do
   variables service_config
   mode '0644'
@@ -43,9 +43,9 @@ template unit_file do
 end
 
 # Java is needed by Kafka, can install it with package
-java_package = node['zookeeper-platform']['java'][node['platform']]
+java_package = node[cookbook_name]['java'][node['platform']]
 package java_package do
-  retries node['zookeeper-platform']['package_retries']
+  retries node[cookbook_name]['package_retries']
   not_if { java_package.to_s.empty? }
 end
 
@@ -53,12 +53,12 @@ end
 config_files = [
   "#{config_path}/zoo.cfg",
   "#{config_path}/log4j.properties",
-  "#{node['zookeeper-platform']['data_dir']}/myid"
+  "#{node[cookbook_name]['data_dir']}/myid"
 ].map do |path|
   "template[#{path}]"
 end
 
-auto_restart = node['zookeeper-platform']['auto_restart']
+auto_restart = node[cookbook_name]['auto_restart']
 # Enable/Start service
 service 'zookeeper' do
   provider Chef::Provider::Service::Systemd

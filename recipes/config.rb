@@ -15,7 +15,7 @@
 #
 
 ::Chef::Recipe.send(:include, ClusterSearch)
-cluster = cluster_search(node['zookeeper-platform'])
+cluster = cluster_search(node[cookbook_name])
 node.run_state[cookbook_name] ||= {}
 if cluster.nil?
   node.run_state[cookbook_name]['abort?'] = true
@@ -23,19 +23,19 @@ if cluster.nil?
 end
 
 # Generate config
-config = node['zookeeper-platform']['config'].dup
+config = node[cookbook_name]['config'].dup
 cluster['hosts'].each_with_index do |v, i|
   config["server.#{i + 1}"] = "#{v}:2888:3888"
 end
 
 # Create work directories
 [
-  node['zookeeper-platform']['log_dir'],
-  node['zookeeper-platform']['data_dir']
+  node[cookbook_name]['log_dir'],
+  node[cookbook_name]['data_dir']
 ].each do |path|
   directory path do
-    owner node['zookeeper-platform']['user']
-    group node['zookeeper-platform']['user']
+    owner node[cookbook_name]['user']
+    group node[cookbook_name]['user']
     mode '0755'
     recursive true
     action :create
@@ -43,7 +43,7 @@ end
 end
 
 # General zookeeper config
-config_path = "#{node['zookeeper-platform']['prefix_home']}/zookeeper/conf"
+config_path = "#{node[cookbook_name]['prefix_home']}/zookeeper/conf"
 
 template "#{config_path}/zoo.cfg" do
   variables config: config
@@ -55,11 +55,11 @@ end
 template "#{config_path}/log4j.properties" do
   source 'properties.erb'
   mode '644'
-  variables config: node['zookeeper-platform']['log4j']
+  variables config: node[cookbook_name]['log4j']
 end
 
 # Create myid file
-template "#{node['zookeeper-platform']['data_dir']}/myid" do
+template "#{node[cookbook_name]['data_dir']}/myid" do
   variables my_id: cluster['my_id']
   mode '0644'
   source 'myid.erb'
