@@ -46,24 +46,23 @@ end
 java_package = node['zookeeper-platform']['java'][node['platform']]
 package java_package do
   retries node['zookeeper-platform']['package_retries']
-end unless java_package.to_s.empty?
-
-# Configuration files to be subscribed
-if node['zookeeper-platform']['auto_restart']
-  config_files = [
-    "#{config_path}/zoo.cfg",
-    "#{config_path}/log4j.properties",
-    "#{node['zookeeper-platform']['data_dir']}/myid"
-  ].map do |path|
-    "template[#{path}]"
-  end
-else config_files = []
+  not_if { java_package.to_s.empty? }
 end
 
+# Configuration files to be subscribed
+config_files = [
+  "#{config_path}/zoo.cfg",
+  "#{config_path}/log4j.properties",
+  "#{node['zookeeper-platform']['data_dir']}/myid"
+].map do |path|
+  "template[#{path}]"
+end
+
+auto_restart = node['zookeeper-platform']['auto_restart']
 # Enable/Start service
 service 'zookeeper' do
   provider Chef::Provider::Service::Systemd
   supports status: true, restart: true, reload: true
-  action [:enable, :start]
-  subscribes :restart, config_files
+  action %i[enable start]
+  subscribes :restart, config_files if auto_restart
 end

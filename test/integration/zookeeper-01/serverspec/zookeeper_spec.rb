@@ -52,7 +52,7 @@ describe 'Zookeeper Configuration' do
   end
 end
 
-describe 'Zookeeper Cluster' do
+describe 'Zookeeper Cluster' do # rubocop:disable Metrics/BlockLength
   check = lambda do |i|
     r = zoo_cmd('ls /', "zookeeper-#{i}-centos-7:2181")
     r.include?('(CONNECTED)')
@@ -61,11 +61,11 @@ describe 'Zookeeper Cluster' do
   (1..10).each do |try|
     puts "Waiting for Zookeeper cluster… Try ##{try}/10, waiting #{try - 1}s"
     sleep(try)
-    break if %w(01 02 03).reduce(true) { |a, e| a && check.call(e) }
+    break if %w[01 02 03].reduce(true) { |a, e| a && check.call(e) }
   end
 
   it 'should be totally connected' do
-    expect(%w(01 02 03).reduce(true) { |a, e| a && check.call(e) }).to be(true)
+    expect(%w[01 02 03].reduce(true) { |a, e| a && check.call(e) }).to be(true)
   end
 
   it 'should locally create /kitchen containing "Data"' do
@@ -78,7 +78,7 @@ describe 'Zookeeper Cluster' do
   end
 
   # Check on all nodes
-  %w(01 02 03).each do |i|
+  %w[01 02 03].each do |i|
     it "should have /kitchen on zookeeper-#{i}-centos-7" do
       get = zoo_cmd('get /kitchen', "zookeeper-#{i}-centos-7:2181")
       expect(get).to contain("Data\n")
