@@ -6,7 +6,7 @@ description 'Installs/Configures a Zookeeper cluster using systemd'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url 'https://gitlab.com/chef-platform/zookeeper-platform'
 issues_url 'https://gitlab.com/chef-platform/zookeeper-platform/issues'
-version '1.5.0'
+version '1.6.0'
 
 chef_version '>= 12.0'
 
