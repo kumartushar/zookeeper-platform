@@ -1,6 +1,27 @@
 Changelog
 =========
 
+1.5.0
+-----
+
+Main:
+
+- Handover maintainance to Make.org
+- Switch zookeeper version to 3.4.10 by default
+
+Tests:
+
+- Fix destroying in kitchen\_command, stop forcing converge when verify
+- Set always\_update and build\_pull in kitchen config
+- Use latest template for .gitlab-ci.yml [20170405]
+
+Misc:
+
+- Use cookbook\_name alias everywhere
+- Fix recent rubocop offenses
+- Fix metadata: license and chef\_version
+- Fix nologin shell for zookeeper user
+
 1.4.0
 -----
 
