@@ -44,9 +44,17 @@ end
 
 # Java is needed by Kafka, can install it with package
 java_package = node[cookbook_name]['java'][node['platform']]
-package java_package do
-  retries node[cookbook_name]['package_retries']
-  not_if { java_package.to_s.empty? }
+
+if java_package.to_s.empty?
+  Chef::Log.warn  "No java specified for the platform #{node['platform']}, "\
+                  'java will not be installed'
+
+  Chef::Log.warn  'Please specify a java package name if you want to '\
+                  'install java using this cookbook.'
+else
+  package java_package do
+    retries node[cookbook_name]['package_retries']
+  end
 end
 
 # Configuration files to be subscribed
