@@ -43,17 +43,21 @@ template unit_file do
 end
 
 # Java is needed by Kafka, can install it with package
-java_package = node[cookbook_name]['java'][node['platform']]
+java = node[cookbook_name]['java']
+# java installation can be intentionally ignored by setting the whole key to ''
+unless java.to_s.empty?
+  java_package = java[node['platform']]
 
-if java_package.to_s.empty?
-  Chef::Log.warn  "No java specified for the platform #{node['platform']}, "\
-                  'java will not be installed'
+  if java_package.to_s.empty?
+    Chef::Log.warn  "No java specified for the platform #{node['platform']}, "\
+                    'java will not be installed'
 
-  Chef::Log.warn  'Please specify a java package name if you want to '\
-                  'install java using this cookbook.'
-else
-  package java_package do
-    retries node[cookbook_name]['package_retries']
+    Chef::Log.warn  'Please specify a java package name if you want to '\
+                    'install java using this cookbook.'
+  else
+    package java_package do
+      retries node[cookbook_name]['package_retries']
+    end
   end
 end
 
