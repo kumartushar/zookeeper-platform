@@ -55,8 +55,9 @@ unless java.to_s.empty?
     Chef::Log.warn  'Please specify a java package name if you want to '\
                     'install java using this cookbook.'
   else
+    package_retries = node[cookbook_name]['package_retries']
     package java_package do
-      retries node[cookbook_name]['package_retries']
+      retries package_retries unless package_retries.nil?
     end
   end
 end
