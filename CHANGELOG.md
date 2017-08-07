@@ -1,6 +1,24 @@
 Changelog
 =========
 
+1.6.0
+-----
+
+Main:
+
+- fix: allow to not install java package
+- fix: setting java attr to "" works as expected
+- fix: do not set retries if package\_retries is nil
+
+Tests:
+
+- use .gitlab-ci.yml template [20170731]
+- force molinillo version to fix berkshelf
+
+Misc:
+
+- set new contributing guide
+
 1.5.0
 -----
 
