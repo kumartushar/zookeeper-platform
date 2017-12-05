@@ -50,6 +50,10 @@ describe 'Zookeeper Configuration' do
   describe file('/var/opt/zookeeper/lib/myid') do
     its(:content) { should eq "1\n" }
   end
+
+  describe file('/opt/zookeeper/conf/log4j.properties') do
+    its(:content) { should contain 'log4j.rootLogger=INFO, CONSOLE' }
+  end
 end
 
 describe 'Zookeeper Cluster' do # rubocop:disable Metrics/BlockLength

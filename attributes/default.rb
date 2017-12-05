@@ -33,7 +33,7 @@ default[cookbook_name]['prefix_root'] = '/opt'
 default[cookbook_name]['prefix_home'] = '/opt'
 # Where to link binaries
 default[cookbook_name]['prefix_bin'] = '/opt/bin'
-# Log directory
+# Log directory, empty by default because everything goes to journald
 default[cookbook_name]['log_dir'] = '/var/opt/zookeeper/log'
 # Data directory
 default[cookbook_name]['data_dir'] = '/var/opt/zookeeper/lib'
@@ -74,9 +74,10 @@ default[cookbook_name]['jvm_opts'] = {
 }
 
 # log4j configuration
+# only CONSOLE by default but you can easily add ROLLINGFILE or TRACEFILE
 # rubocop:disable Style/FormatStringToken
 default[cookbook_name]['log4j'] = {
-  'log4j.rootLogger' => 'INFO, ROLLINGFILE',
+  'log4j.rootLogger' => 'INFO, CONSOLE',
   'log4j.appender.CONSOLE' => 'org.apache.log4j.ConsoleAppender',
   'log4j.appender.CONSOLE.Threshold' => 'INFO',
   'log4j.appender.CONSOLE.layout' => 'org.apache.log4j.PatternLayout',
