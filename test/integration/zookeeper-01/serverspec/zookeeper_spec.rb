@@ -32,7 +32,7 @@ end
 
 describe 'Zookeeper Configuration' do
   describe file('/opt/zookeeper/conf/zoo.cfg') do
-    its(:content) { should eq <<-eos.gsub(/^ {4}/, '') }
+    its(:content) { should eq <<-CONFIG.gsub(/^ {4}/, '') }
     # Produced by Chef -- changes will be overwritten
 
     clientPort=2181
@@ -44,7 +44,7 @@ describe 'Zookeeper Configuration' do
     server.1=zookeeper-01-centos-7:2888:3888
     server.2=zookeeper-02-centos-7:2888:3888
     server.3=zookeeper-03-centos-7:2888:3888
-    eos
+    CONFIG
   end
 
   describe file('/var/opt/zookeeper/lib/myid') do

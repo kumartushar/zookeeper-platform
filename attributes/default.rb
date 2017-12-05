@@ -74,6 +74,7 @@ default[cookbook_name]['jvm_opts'] = {
 }
 
 # log4j configuration
+# rubocop:disable Style/FormatStringToken
 default[cookbook_name]['log4j'] = {
   'log4j.rootLogger' => 'INFO, ROLLINGFILE',
   'log4j.appender.CONSOLE' => 'org.apache.log4j.ConsoleAppender',
@@ -97,6 +98,7 @@ default[cookbook_name]['log4j'] = {
   'log4j.appender.TRACEFILE.layout.ConversionPattern' =>
     '%d{ISO8601} [myid:%X{myid}] - %-5p [%t:%C{1}@%L][%x] - %m%n'
 }
+# rubocop:enable Style/FormatStringToken
 
 # Configure retries for the package resources, default = global default (0)
 # (mostly used for test purpose)
