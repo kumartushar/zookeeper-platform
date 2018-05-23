@@ -18,9 +18,9 @@
 cookbook_name = 'zookeeper-platform'
 
 # Zookeeper package
-default[cookbook_name]['version'] = '3.4.10'
+default[cookbook_name]['version'] = '3.4.12'
 default[cookbook_name]['checksum'] =
-  '7f7f5414e044ac11fee2a1e0bc225469f51fb0cdf821e67df762a43098223f27'
+  'c686f9319050565b58e642149cb9e4c9cc8c7207aacc2cb70c5c0672849594b9'
 default[cookbook_name]['mirror'] =
   'http://archive.apache.org/dist/zookeeper/'
 
