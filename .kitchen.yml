@@ -29,8 +29,9 @@ driver:
   network: kitchen
   security_opt: seccomp=unconfined
   skip_preparation: true
-  require_chef_omnibus: false
   build_pull: true
+  instance_host_name: true
+  instance_container_name: true
 
 transport:
   name: docker_cli
@@ -38,6 +39,8 @@ transport:
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
+  product_name: chef
+  install_strategy: skip
 
 platforms:
   - name: centos-7
@@ -49,9 +52,6 @@ suites:
 <% { 'zookeeper' => 3 }.each do |name, n| %>
   <% ("01".."#{n}").each do |i| %>
   - name: <%= name %>-<%= i %>
-    driver:
-      instance_host_name: true
-      instance_container_name: true
     run_list:
       - role[<%= name %>-kitchen]
     attributes:
