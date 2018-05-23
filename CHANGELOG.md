@@ -1,6 +1,26 @@
 Changelog
 =========
 
+1.7.0
+-----
+
+Main:
+
+- feat: change default log4j logger to CONSOLE
+- feat: use zookeeper 3.4.12 by default
+
+Tests:
+
+- test: replace deprecated require\_chef\_omnibus
+- test: include .gitlab-ci.yml from test-cookbook
+
+Misc:
+
+- chore: add 2018 to copyright notice
+- style(rubocop): fix UnneededCopDisableDirective
+- style(rubocop): fix heredoc & log4j config
+- chore: rm molinillo constraint in Gemfile
+
 1.6.0
 -----
 
