@@ -15,7 +15,8 @@
 #
 
 ::Chef::Recipe.send(:include, ClusterSearch)
-cluster = cluster_search(node[cookbook_name])
+cluster = cluster_search(node[cookbook_name]) { |n| n['ipaddress'] }
+
 node.run_state[cookbook_name] ||= {}
 if cluster.nil?
   node.run_state[cookbook_name]['abort?'] = true
